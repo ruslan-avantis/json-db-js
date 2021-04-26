@@ -32,13 +32,11 @@ const demoFunc = async () => {
     // Database Run
     const jsonDB = await db.run(settings)
 
-    
-    // fields types: ['boolean', 'integer', 'double', 'string', 'array', 'object']
-    
     // Table Name
     let table_name = 'demo_table'
     
     // Table Fields. The 'id' field is added automatically
+    // fields types: ['boolean', 'integer', 'double', 'string', 'array', 'object']
     let table_fields = {
         'alias': 'string',
         'title': 'string',
