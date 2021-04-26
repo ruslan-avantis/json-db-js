@@ -130,8 +130,7 @@ const Plugin = (require('./lib/plugin.js'))()
 
 async function demoFunc() {
 
-    const db = new jsonDbRun()
-    const jsonDB = await db.run()
+    const jsonDB = await (new jsonDbRun()).run()
 
     // Database сonnecting table demo_table
     const demo_table = await jsonDB.table('demo_table', await db.getConfig())
