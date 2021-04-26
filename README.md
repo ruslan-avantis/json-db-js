@@ -12,12 +12,9 @@ npm install node-sql-parser --save
 const demoFunc = async () => {
 
     const jsonDbRun = require('./lib/json_db.js')
-    const Plugin = await (require('./lib/plugin.js'))()
+    const db = new jsonDbRun().setAutoCreate(true)
 
-    // Database configuration
-    let db = new jsonDbRun().setAutoCreate(true)
-
-    const settings = {
+    let settings = {
         'auto_create': true,
         'JSON_DB_CRYPT': false,
         'JSON_DB_API': false,
@@ -35,8 +32,12 @@ const demoFunc = async () => {
     // Database Run
     const jsonDB = await db.run(settings)
 
-    // Create Table
-    await jsonDB.create('demo_table', {
+    // Table Name
+    let table_name = 'demo_table'
+    
+    // Table Fields. The 'id' field is added automatically
+    // fields types: ['boolean', 'integer', 'double', 'string', 'array', 'object']
+    let table_fields = {
         'alias': 'string',
         'title': 'string',
         'description': 'string',
@@ -45,13 +46,18 @@ const demoFunc = async () => {
         'field_integer': 'integer',
         'field_double': 'double',
         'sort': 'integer',
-       'state': 'integer',
+        'state': 'integer',
         'score': 'integer'
-    }, await db.getConfig())
+    }
+    
+    // Create Table
+    await jsonDB.create(table_name, table_fields, await db.getConfig())
 
     // Database сonnecting table demo_table
     const demo_table = await jsonDB.table('demo_table', await db.getConfig())
 
+    const Plugin = await (require('./lib/plugin.js'))()
+    
     // New item
     demo_table.alias = await Plugin.token()
     demo_table.title = 'Test 13'
@@ -173,13 +179,10 @@ demoFunc()
 const demoFunc = async () => {
 
     const jsonDbRun = require('./lib/json_db.js')
-
     // Database configuration
-    let db = new jsonDbRun()
-
+    const db = new jsonDbRun()
     // Database Run
     const jsonDB = await db.run()
-
     // Database сonnecting table demo_table
     const demo_table = await jsonDB.table('demo_table', await db.getConfig())
 
