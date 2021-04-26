@@ -20,9 +20,9 @@ $config['settings']['db']['access_key'] = true;
 
 ```json
 {
-    "status": "403",
-    "code": 403,
-    "message": "Access is denied"
+	"status": "403",
+	"code": 403,
+	"message": "Access is denied"
 }
 ```
 

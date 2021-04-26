@@ -18,14 +18,14 @@ JSON база данных с открытым исходным кодом. На
 Подключить с помощью [AutoRequire](https://github.com/pllano/auto-require)
 ```json
 "require" [
-    {
-        "namespace": "jsonDB",
-        "dir": "/pllano/json-db/src",
-        "link": "https://github.com/pllano/json-db/archive/master.zip",
-        "name": "json-db",
-        "version": "master",
-        "vendor": "pllano"
-    }
+	{
+		"namespace": "jsonDB",
+		"dir": "/pllano/json-db/src",
+		"link": "https://github.com/pllano/json-db/archive/master.zip",
+		"name": "json-db",
+		"version": "master",
+		"vendor": "pllano"
+	}
 ]
 ```
 
@@ -46,12 +46,12 @@ JSON база данных с открытым исходным кодом. На
 - Если база работает Вы увидите следующий результат:
 ```json
 {
-    "headers": {
-        "status": "200 OK",
-        "code": 200,
-        "message": "RESTfull API json DB works!",
-        "message_id": "https:\/\/github.com\/pllano\/APIS-2018\/tree\/master\/http-codes\/200.md"
-    }
+	"headers": {
+		"status": "200 OK",
+		"code": 200,
+		"message": "RESTfull API json DB works!",
+		"message_id": "https:\/\/github.com\/pllano\/APIS-2018\/tree\/master\/http-codes\/200.md"
+	}
 }
 ```
 ### Автоматическое разворачиваение
@@ -132,18 +132,18 @@ if (0 === strpos(bin2hex($get_body), 'efbbbf')) {$get_body = substr($get_body, 3
 $response = json_decode($get_body, true);
 
 if (isset($response["headers"]["code"])) {
-    if ($response["headers"]["code"] == 200) {
-        $count = count($response["body"]["items"]);
-        if ($count >= 1) {
-            foreach($response["body"]["items"] as $item)
-            {
-                // Если $value object переводим в array
-                $item = is_array($value["item"]) ? $item["item"] : (array)$value["item"];
-                // Получаем данные
-                print_r($item["name"]);
-            }
-        }
-    }
+	if ($response["headers"]["code"] == 200) {
+		$count = count($response["body"]["items"]);
+		if ($count >= 1) {
+			foreach($response["body"]["items"] as $item)
+			{
+				// Если $value object переводим в array
+				$item = is_array($value["item"]) ? $item["item"] : (array)$value["item"];
+				// Получаем данные
+				print_r($item["name"]);
+			}
+		}
+	}
 }
 ```
 
@@ -197,9 +197,9 @@ $db->run();
 use jsonDB\Database as jsonDb;
 
 $arr = array(
-    'id' => 'integer',
-    'name' => 'string',
-    'название_поля' => 'тип данных'
+	'id' => 'integer',
+	'name' => 'string',
+	'название_поля' => 'тип данных'
 );
 
 jsonDb::create('resource_name', $arr);
@@ -222,9 +222,9 @@ use jsonDB\Validate;
 use jsonDB\dbException;
 
 try{
-    Validate::table('resource_name')->exists();
+	Validate::table('resource_name')->exists();
 } catch(dbException $e){
-    // Ресурс не существует
+	// Ресурс не существует
 }
 ```
 #### Создать запись

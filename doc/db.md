@@ -55,9 +55,9 @@ $db->run();
 ### Создать таблицу в базе данных
 ```php
 $arr = array(
-    'id' => 'integer',
-    'name' => 'string',
-    'название_поля' => 'тип данных'
+	'id' => 'integer',
+	'name' => 'string',
+	'название_поля' => 'тип данных'
 );
 
 jsonDb::create('table_name', $arr);
@@ -71,9 +71,9 @@ jsonDb::remove('table_name');
 ### Проверьте, существует ли таблица в базе данных
 ```php
 try{
-    \jsonDb\Validate::table('table_name')->exists();
+	\jsonDb\Validate::table('table_name')->exists();
 } catch(\jsonDb\jsonDbException $e){
-    // Таблица не существует
+	// Таблица не существует
 }
 ```
 
@@ -113,10 +113,10 @@ try{
 #### Multiple select (Мульти выборки)
 ```php
 $table = jsonDb::table('table_name')->findAll();
-    
+	
 foreach($table as $row)
 {
-    print_r($row);
+	print_r($row);
 }
 ```
 #### Single record select

@@ -48,9 +48,9 @@
 - Вы увидите следующий результат если все хорошо 
 ```json
 {
-    "status": "OK",
-    "code": 200,
-    "message": "db_json_api works!"
+	"status": "OK",
+	"code": 200,
+	"message": "db_json_api works!"
 }
 ```
 ### RESTful API jsonDB потдерживает запросы:
