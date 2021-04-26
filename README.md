@@ -1,5 +1,5 @@
 # «jsonDbJs» - JSON Data Base for Node.js
-JSON open source database. Written in Javascript. Distributed under the [MIT](https://opensource.org/licenses/MIT)license.
+JSON open source database. Written in Javascript. Distributed under the [MIT](https://opensource.org/licenses/MIT) license.
 
 
 ## :tada: Install
@@ -107,6 +107,53 @@ demo_table.field_string = 'Edit string'
 await demo_table.save()
 
 console.log('-- Update item data --', demo_table)
+```
+
+## Bulk Add Data
+```js
+let bulk_arr = [
+    {
+        "alias": Plugin.token(),
+        "title": "title bulk Insert",
+        "description": "description bulk Insert",
+        "field_string": "Test field string",
+        "field_boolean": false,
+        "field_integer": 120,
+        "field_double": 25.60,
+        "sort": 1,
+        "state": 1,
+        "score": 10
+    },
+    {
+        "alias": Plugin.token(),
+        "title": "title bulk Insert",
+        "description": "description bulk Insert",
+        "field_string": "Test field string",
+        "field_boolean": false,
+        "field_integer": 120,
+        "field_double": 25.60,
+        "sort": 1,
+        "state": 1,
+        "score": 10
+    }
+]
+
+demo_table.bulkInsert(bulk_arr)
+```
+
+## SELECT Data
+```js
+let data = await demo_table.where('id', '>=', 1)
+    .where('id', '<=', 10)
+    .where('title', '>', 'AB')
+    //.orderBySql('title DESC, id ASC')
+    .orderBy('title', 'ASC')
+    .orderBy('id', 'DESC')
+    .limit(10) // .limit(number, offset)
+    .offset(0)
+    .findAll()
+
+console.log('demo_table.where', data)
 ```
 
 ## License
