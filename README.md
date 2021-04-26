@@ -1,10 +1,6 @@
 # «jsonDbJs» - JSON Data Base for Node.js
 JSON open source database. Written in Javascript. Distributed under the [MIT](https://opensource.org/licenses/MIT) license.
 
-
-## :tada: Install
-```bash
-npm install node-sql-parser --save
 ```
 ## :rocket: Usage
 ```js
