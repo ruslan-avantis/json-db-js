@@ -119,7 +119,7 @@ demoFunc()
 ## Bulk Add Data
 ```js
 
-async function demoFunc() => {
+async function demoFunc() {
 
     const jsonDbRun = require('./lib/json_db.js')
     const Plugin = await (require('./lib/plugin.js'))()
@@ -173,7 +173,8 @@ demoFunc()
 ## SELECT Data
 ```js
 
-async function demoFunc() => {
+const demoFunc = async () => {
+
     const jsonDbRun = require('./lib/json_db.js')
 
     // Database configuration
