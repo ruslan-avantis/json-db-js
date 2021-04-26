@@ -37,7 +37,8 @@ const demoFunc = async () => {
     
     // Table Name
     let table_name = 'demo_table'
-    // Table Fields
+    
+    // Table Fields. The 'id' field is added automatically
     let table_fields = {
         'alias': 'string',
         'title': 'string',
@@ -50,6 +51,7 @@ const demoFunc = async () => {
         'state': 'integer',
         'score': 'integer'
     }
+    
     // Create Table
     await jsonDB.create(table_name, table_fields, await db.getConfig())
 
