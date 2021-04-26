@@ -12,8 +12,6 @@ npm install node-sql-parser --save
 const demoFunc = async () => {
 
     const jsonDbRun = require('./lib/json_db.js')
-    const Plugin = await (require('./lib/plugin.js'))()
-    // Database configuration
     const db = new jsonDbRun().setAutoCreate(true)
 
     let settings = {
@@ -51,6 +49,8 @@ const demoFunc = async () => {
     // Database сonnecting table demo_table
     const demo_table = await jsonDB.table('demo_table', await db.getConfig())
 
+    const Plugin = await (require('./lib/plugin.js'))()
+    
     // New item
     demo_table.alias = await Plugin.token()
     demo_table.title = 'Test 13'
