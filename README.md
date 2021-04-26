@@ -33,6 +33,8 @@ const demoFunc = async () => {
     const jsonDB = await db.run(settings)
 
     // Create Table
+    // defined_types: ['boolean', 'integer', 'double', 'string', 'array', 'object']
+    
     await jsonDB.create('demo_table', {
         'alias': 'string',
         'title': 'string',
