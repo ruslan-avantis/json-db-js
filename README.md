@@ -13,11 +13,10 @@ const demoFunc = async () => {
 
     const jsonDbRun = require('./lib/json_db.js')
     const Plugin = await (require('./lib/plugin.js'))()
-
     // Database configuration
-    let db = new jsonDbRun().setAutoCreate(true)
+    const db = new jsonDbRun().setAutoCreate(true)
 
-    const settings = {
+    let settings = {
         'auto_create': true,
         'JSON_DB_CRYPT': false,
         'JSON_DB_API': false,
@@ -173,13 +172,10 @@ demoFunc()
 const demoFunc = async () => {
 
     const jsonDbRun = require('./lib/json_db.js')
-
     // Database configuration
-    let db = new jsonDbRun()
-
+    const db = new jsonDbRun()
     // Database Run
     const jsonDB = await db.run()
-
     // Database сonnecting table demo_table
     const demo_table = await jsonDB.table('demo_table', await db.getConfig())
 
