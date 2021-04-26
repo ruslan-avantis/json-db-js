@@ -9,6 +9,7 @@ npm install node-sql-parser --save
 ## :rocket: Usage
 ```js
 const jsonDbRun = require('./lib/json_db.js')
+const Plugin = await (require('./lib/plugin.js'))()
 
 const demoFunc = async () => {
 
@@ -56,8 +57,6 @@ const demoFunc = async () => {
     // Database сonnecting table demo_table
     const demo_table = await jsonDB.table('demo_table', await db.getConfig())
 
-    const Plugin = await (require('./lib/plugin.js'))()
-    
     // New item
     demo_table.alias = await Plugin.token()
     demo_table.title = 'Test 13'
@@ -127,6 +126,7 @@ demoFunc()
 ## Bulk Add Data
 ```js
 const jsonDbRun = require('./lib/json_db.js')
+const Plugin = await (require('./lib/plugin.js'))()
 
 async function demoFunc() {
 
@@ -135,8 +135,6 @@ async function demoFunc() {
 
     // Database сonnecting table demo_table
     const demo_table = await jsonDB.table('demo_table', await db.getConfig())
-
-    const Plugin = await (require('./lib/plugin.js'))()
     
     let bulk_arr = [
         {
