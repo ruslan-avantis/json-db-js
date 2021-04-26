@@ -9,7 +9,7 @@ npm install node-sql-parser --save
 ## :rocket: Usage
 ```js
 const jsonDbRun = require('./lib/json_db.js')
-const Plugin = await (require('./lib/plugin.js'))()
+const Plugin = (require('./lib/plugin.js'))()
 
 const demoFunc = async () => {
 
@@ -126,7 +126,7 @@ demoFunc()
 ## Bulk Add Data
 ```js
 const jsonDbRun = require('./lib/json_db.js')
-const Plugin = await (require('./lib/plugin.js'))()
+const Plugin = (require('./lib/plugin.js'))()
 
 async function demoFunc() {
 
