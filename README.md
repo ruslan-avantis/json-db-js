@@ -8,6 +8,7 @@ npm install node-sql-parser --save
 ```
 ## :rocket: Usage
 ```js
+
 const jsonDbRun = require('./lib/json_db.js')
 const Plugin = await (require('./lib/plugin.js'))()
 
@@ -107,10 +108,26 @@ demo_table.field_string = 'Edit string'
 await demo_table.save()
 
 console.log('-- Update item data --', demo_table)
+
 ```
 
 ## Bulk Add Data
 ```js
+
+const jsonDbRun = require('./lib/json_db.js')
+const Plugin = await (require('./lib/plugin.js'))()
+
+// Database configuration
+let db = new jsonDbRun()
+
+const settings = {}
+
+// Database Run
+const jsonDB = await db.run(settings)
+
+// Database сonnecting table demo_table
+const demo_table = await jsonDB.table('demo_table', await db.getConfig())
+
 let bulk_arr = [
     {
         "alias": Plugin.token(),
@@ -139,10 +156,23 @@ let bulk_arr = [
 ]
 
 demo_table.bulkInsert(bulk_arr)
+
 ```
 
 ## SELECT Data
 ```js
+
+const jsonDbRun = require('./lib/json_db.js')
+
+// Database configuration
+let db = new jsonDbRun()
+
+// Database Run
+const jsonDB = await db.run()
+
+// Database сonnecting table demo_table
+const demo_table = await jsonDB.table('demo_table', await db.getConfig())
+
 let data = await demo_table.where('id', '>=', 1)
     .where('id', '<=', 10)
     .where('title', '>', 'AB')
@@ -154,6 +184,7 @@ let data = await demo_table.where('id', '>=', 1)
     .findAll()
 
 console.log('demo_table.where', data)
+
 ```
 
 ## License
