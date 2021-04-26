@@ -69,6 +69,7 @@ const demoFunc = async () => {
 
     // Get ID Item
     let id = demo_table.id
+    
     console.log('demo_table.id: ', id)
 
     // Edit Curent Item
@@ -79,6 +80,7 @@ const demoFunc = async () => {
 
     // Clear Cache Item
     await demo_table.clear()
+    
     console.log('-- Clear Cache Item --', demo_table)
 
     // New Item
