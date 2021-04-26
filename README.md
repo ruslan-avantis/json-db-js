@@ -122,19 +122,14 @@ demoFunc()
 async function demoFunc() {
 
     const jsonDbRun = require('./lib/json_db.js')
-    const Plugin = await (require('./lib/plugin.js'))()
-
-    // Database configuration
-    let db = new jsonDbRun()
-
-    const settings = {}
-
-    // Database Run
-    const jsonDB = await db.run(settings)
+    const db = new jsonDbRun()
+    const jsonDB = await db.run()
 
     // Database сonnecting table demo_table
     const demo_table = await jsonDB.table('demo_table', await db.getConfig())
 
+    const Plugin = await (require('./lib/plugin.js'))()
+    
     let bulk_arr = [
         {
             "alias": Plugin.token(),
@@ -162,7 +157,7 @@ async function demoFunc() {
         }
     ]
 
-    demo_table.bulkInsert(bulk_arr)
+    let ids = await demo_table.bulkInsert(bulk_arr)
 
 }
 
@@ -186,7 +181,8 @@ const demoFunc = async () => {
     // Database сonnecting table demo_table
     const demo_table = await jsonDB.table('demo_table', await db.getConfig())
 
-    let data = await demo_table.where('id', '>=', 1)
+    let data = await demo_table
+        .where('id', '>=', 1)
         .where('id', '<=', 10)
         .where('title', '>', 'AB')
         //.orderBySql('title DESC, id ASC')
@@ -196,7 +192,7 @@ const demoFunc = async () => {
         .offset(0)
         .findAll()
 
-    console.log('demo_table.where', data)
+    console.log('data', data)
 }
 
 demoFunc()
