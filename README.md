@@ -8,10 +8,10 @@ npm install node-sql-parser --save
 ```
 ## :rocket: Usage
 ```js
+const jsonDbRun = require('./lib/json_db.js')
 
 const demoFunc = async () => {
 
-    const jsonDbRun = require('./lib/json_db.js')
     const db = new jsonDbRun().setAutoCreate(true)
 
     let settings = {
@@ -126,10 +126,10 @@ demoFunc()
 
 ## Bulk Add Data
 ```js
+const jsonDbRun = require('./lib/json_db.js')
 
 async function demoFunc() {
 
-    const jsonDbRun = require('./lib/json_db.js')
     const db = new jsonDbRun()
     const jsonDB = await db.run()
 
@@ -175,10 +175,10 @@ demoFunc()
 
 ## SELECT Data
 ```js
+const jsonDbRun = require('./lib/json_db.js')
 
 const demoFunc = async () => {
 
-    const jsonDbRun = require('./lib/json_db.js')
     // Database configuration
     const db = new jsonDbRun()
     // Database Run
