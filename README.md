@@ -47,7 +47,7 @@ const demoFunc = async () => {
         'field_integer': 'integer',
         'field_double': 'double',
         'sort': 'integer',
-       'state': 'integer',
+        'state': 'integer',
         'score': 'integer'
     }
     // Create Table
