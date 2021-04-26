@@ -32,10 +32,13 @@ const demoFunc = async () => {
     // Database Run
     const jsonDB = await db.run(settings)
 
-    // Create Table
-    // defined_types: ['boolean', 'integer', 'double', 'string', 'array', 'object']
     
-    await jsonDB.create('demo_table', {
+    // fields types: ['boolean', 'integer', 'double', 'string', 'array', 'object']
+    
+    // Table Name
+    let table_name = 'demo_table'
+    // Table Fields
+    let table_fields = {
         'alias': 'string',
         'title': 'string',
         'description': 'string',
@@ -46,7 +49,9 @@ const demoFunc = async () => {
         'sort': 'integer',
        'state': 'integer',
         'score': 'integer'
-    }, await db.getConfig())
+    }
+    // Create Table
+    await jsonDB.create(table_name, table_fields, await db.getConfig())
 
     // Database сonnecting table demo_table
     const demo_table = await jsonDB.table('demo_table', await db.getConfig())
