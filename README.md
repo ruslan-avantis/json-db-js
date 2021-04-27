@@ -216,5 +216,34 @@ demoFunc()
 
 ```
 
+## Support for SQL syntax in development now
+```js
+const jsonDbRun = require('./lib/json_db.js')
+
+const demoFunc = async () => {
+
+    // Database configuration
+    const db = new jsonDbRun()
+    // Database Run
+    const jsonDB = await db.run()
+    // Database сonnecting table demo_table
+    
+    let sql_string = `
+      SELECT *
+      FROM products
+      WHERE category_id IN (SELECT id FROM categories)
+      ORDER BY id`
+    
+    let demo_table = await jsonDB.sql(sql_string, await db.getConfig())
+  
+    let data = await demo_table.findAll()
+
+    console.log('data', data)
+}
+
+demoFunc()
+
+```
+
 ## License
 The MIT License (MIT). Please see [LICENSE](https://github.com/ruslan-avantis/json-db/blob/master/LICENSE) for more information.
