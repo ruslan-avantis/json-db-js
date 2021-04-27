@@ -38,8 +38,7 @@ const demoFunc = async () => {
             'JSON_DB_CORE_DIR': __dirname+'/_json_db_/core',
             'JSON_DB_LOG_DIR': __dirname+'/_json_db_/log',
             'STRUCTURE_REP': 'https://raw.githubusercontent.com/ruslan-avantis/structure-db/master/db.json'
-        },
-        'HTTP_CODES': 'https://raw.githubusercontent.com/ruslan-avantis/APIS/master/http-codes.json'
+        }
     }
 
     // Database Run
