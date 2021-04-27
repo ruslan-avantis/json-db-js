@@ -201,9 +201,9 @@ const demoFunc = async () => {
     let data = await demo_table
         .where('id', '>=', 1)
         .where('id', '<=', 10)
-        .where('title', '>', 'AB')
+        .where('title', '!=', 'Demo')
         //.orderBySql('title DESC, id ASC')
-        .orderBy('title', 'ASC')
+        .orderBy('title')
         .orderBy('id', 'DESC')
         .limit(10) // .limit(number, offset)
         .offset(0)
