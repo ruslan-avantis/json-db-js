@@ -1,3 +1,4 @@
 node_modules/
 _json_db_/
 package-lock.json
+test/main.test.js

@@ -13,8 +13,14 @@ JSON open source database. Written in Javascript. Distributed under the [MIT](ht
   "npm": "^6.8.0",
   "path": "^0.12.7",
   "promise": "^8.0.2",
-  "uuid": "^3.3.2"
+  "uuid": "^3.3.2",
+  "chai": "^4.2.0",
+  "mocha": "^7.1.1",
+  "benchmark": "^2.1.3"
 }
+```
+```bash
+npm i json-db-js --save
 ```
 
 ## :rocket: Simple Usage

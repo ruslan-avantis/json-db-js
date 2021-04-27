@@ -35,7 +35,7 @@ let demoJsonDabaBase = async () => {
 	const jsonDB = await db.run(settings)
 
 	// Create Table
-	await jsonDB.create('demo_table', {
+	await jsonDB.create('demo_table_2', {
 		'alias': 'string',
 		'title': 'string',
 		'description': 'string',
@@ -49,7 +49,7 @@ let demoJsonDabaBase = async () => {
 	}, await db.getConfig())
 
 	// Database сonnecting table demo_table
-	const demo_table = await jsonDB.table('demo_table', await db.getConfig())
+	const demo_table = await jsonDB.table('demo_table_2', await db.getConfig())
 
 	// New item
 	demo_table.alias = await Plugin.token()
