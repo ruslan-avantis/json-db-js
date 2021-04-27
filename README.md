@@ -234,8 +234,9 @@ const demoFunc = async () => {
     let sql_string = `SELECT * FROM products WHERE category_id IN (SELECT id FROM categories) ORDER BY id`
     /** Other examples
         `SELECT name FROM leaderboard ORDER BY score DESC LIMIT 5 OFFSET 3`
-        `SELECT a.name AS name FROM (SELECT *, (price*quantity) AS new FROM Products ORDER BY new DESC, name ASC LIMIT 1 OFFSET 0) AS a`
         `SELECT * FROM prods WHERE name LIKE '%keyword%' OR sku LIKE '%keyword%'`
+        `SELECT a.name AS name 
+         FROM (SELECT *, (price*quantity) AS new FROM Products ORDER BY new DESC, name ASC LIMIT 1 OFFSET 0) AS a`
      */
     
     let table = await jsonDB.sql(sql_string, await db.getConfig())
