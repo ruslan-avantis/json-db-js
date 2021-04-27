@@ -11,7 +11,7 @@ if (process.env.NODE_ENV) {
 let demoJsonDabaBase = async () => {
 
 	//const jsonDbRun = require('./lib/json_db.js')
-	const Plugin = await (require('./lib/plugin.js'))()
+	const Plugin = require('./lib/plugin.js')
 
 	// Database configuration
 	let db = new (require('./lib/json_db.js'))().setAutoCreate(true)

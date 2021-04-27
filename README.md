@@ -4,21 +4,23 @@ JSON open source database. Written in Javascript. Distributed under the [MIT](ht
 ## The following libraries need to be installed
 ```json
 {
-  "curlrequest": "^1.0.1",
-  "dateformat": "^3.0.3",
-  "dotenv": "^8.2.0",
-  "fs-extra": "^7.0.1",
-  "helmet": "^3.21.2",
-  "lodash": "^4.17.15",
-  "npm": "^6.8.0",
-  "path": "^0.12.7",
-  "promise": "^8.0.2",
-  "uuid": "^3.3.2",
-  "chai": "^4.2.0",
-  "mocha": "^7.1.1",
-  "benchmark": "^2.1.3"
+    "benchmark": "^2.1.4",
+    "chai": "^4.3.4",
+    "curlrequest": "^1.0.1",
+    "dateformat": "^3.0.3",
+    "debug": "^4.3.1",
+    "dotenv": "^8.2.0",
+    "fs-extra": "^7.0.1",
+    "helmet": "^3.21.2",
+    "lodash": "^4.17.15",
+    "mocha": "^8.3.2",
+    "npm": "^6.8.0",
+    "path": "^0.12.7",
+    "promise": "^8.0.2",
+    "uuid": "^3.3.2"
 }
 ```
+
 ```bash
 npm i json-db-js --save
 ```
@@ -27,7 +29,7 @@ npm i json-db-js --save
 
 ```js
 const jsonDbRun = require('./lib/json_db.js')
-const Plugin = (require('./lib/plugin.js'))()
+const Plugin = require('./lib/plugin.js')
 
 const demoFunc = async () => {
 
@@ -142,7 +144,7 @@ demoFunc()
 ## Bulk Add Data
 ```js
 const jsonDbRun = require('./lib/json_db.js')
-const Plugin = (require('./lib/plugin.js'))()
+const Plugin = require('./lib/plugin.js')
 
 async function demoFunc() {
 
@@ -276,7 +278,7 @@ demoFunc()
 
 ```
 
-## Support for SQL syntax in development now
+## Coming Soon: Support for SQL syntax
 ```js
 const jsonDbRun = require('./lib/json_db.js')
 

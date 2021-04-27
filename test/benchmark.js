@@ -2,7 +2,7 @@
 
 const Benchmark = require('benchmark')
 const suite = new Benchmark.Suite
-const Plugin = (require('../lib/plugin.js'))()
+const Plugin = require('../lib/plugin.js')
 const db = new (require('../lib/json_db.js'))()
 
 let benchmarkRun = async () => {
