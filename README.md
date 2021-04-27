@@ -245,10 +245,16 @@ demoFunc()
   table.clearKeyInfo() // Set NULL for currentId and currentKey and item id
   table.setFields() // 
 
-  table.find(id) // Get item by id
+  let obj = await table.find(id) // Get item by id
   table.getById(id) // alias find(id)
   table.delete() // delete curent item
   table.clear() // clear cache curent item
+  table.lastId() // last_id in curent table
+
+  // setter or getter field for item
+  table[field_name] // get
+  table[field_name] = 1 // set
+  delete table[field_name] // delete
 
   // SELECT
   // operators ['=', '==', '===', '<>', '!=', '!==', '>', '<', '>=', '<=', 'and', 'or']
@@ -259,13 +265,9 @@ demoFunc()
   table.orderBySql('title DESC, id ASC') // ORDER BY an SQL-like
   table.limit(number, offset = 0) // set limit and offset
   table.offset(offset) // set offset
-  table.findAll() // Execute
-
-  // setter or getter field for item
-  table[field_name] // get
-  table[field_name] = 1 // set
-  delete table[field_name] // delete
   
+  let data = await table.findAll() // Execute
+
 ```
 
 ## Support for SQL syntax in development now
@@ -287,8 +289,10 @@ const demoFunc = async () => {
         `SELECT a.name AS name 
          FROM (SELECT *, (price*quantity) AS new FROM Products ORDER BY new DESC, name ASC LIMIT 1 OFFSET 0) AS a`
      */
-    
-    let table = await jsonDB.sql(sql_string, await db.getConfig())
+
+    let values = [] // [] or false or array values
+
+    let table = await jsonDB.sql(sql_string, values, await db.getConfig())
     
     let data = await table.findAll()
 
