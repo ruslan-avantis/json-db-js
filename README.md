@@ -228,11 +228,7 @@ const demoFunc = async () => {
     const jsonDB = await db.run()
     // Database сonnecting table demo_table
     
-    let sql_string = `
-      SELECT *
-      FROM products
-      WHERE category_id IN (SELECT id FROM categories)
-      ORDER BY id`
+    let sql_string = `SELECT * FROM products WHERE category_id IN (SELECT id FROM categories) ORDER BY id`
     
     let demo_table = await jsonDB.sql(sql_string, await db.getConfig())
   
