@@ -29,8 +29,6 @@ const demoFunc = async () => {
 
     let settings = {
         'auto_create': true,
-        'JSON_DB_CRYPT': false,
-        'JSON_DB_API': false,
         'console_error': true,
         'consoleLog': (...arg) => { console.log(...arg) },
         'dir': {
