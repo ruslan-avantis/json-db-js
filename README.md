@@ -239,7 +239,16 @@ demoFunc()
   table.getRowKey(id) // Returns array key of row with specified ID
   table.clearKeyInfo() // Set NULL for currentId and currentKey and item id
   table.setFields() // 
-  
+
+  table.find(id) // Get item by id
+  table.getById(id) // alias find(id)
+  table.delete() // delete curent item
+  table.clear() // clear cache curent item
+
+  // setter or getter field for item
+  table[field_name] // get
+  table[field_name] = 1 // set
+  delete table[field_name] // delete
   
 ```
 
