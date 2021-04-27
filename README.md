@@ -3,9 +3,12 @@ JSON open source database. Written in Javascript. Distributed under the [MIT](ht
 
 ## The following libraries need to be installed
 ```bash
+npm
+path
+promise
+lodash
 fs-extra
 sanitize-html
-path
 uuid
 crypto
 dateformat
