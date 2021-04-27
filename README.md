@@ -1,7 +1,19 @@
 # «jsonDbJs» - JSON Data Base for Node.js
 JSON open source database. Written in Javascript. Distributed under the [MIT](https://opensource.org/licenses/MIT) license.
 
+## The following libraries need to be installed
+```bash
+fs-extra
+sanitize-html
+path
+uuid
+crypto
+dateformat
+curlrequest
+```
+
 ## :rocket: Simple Usage
+
 ```js
 const jsonDbRun = require('./lib/json_db.js')
 const Plugin = (require('./lib/plugin.js'))()
