@@ -2,17 +2,19 @@
 JSON open source database. Written in Javascript. Distributed under the [MIT](https://opensource.org/licenses/MIT) license.
 
 ## The following libraries need to be installed
-```bash
-npm
-path
-promise
-lodash
-fs-extra
-sanitize-html
-uuid
-crypto
-dateformat
-curlrequest
+```json
+{
+  "curlrequest": "^1.0.1",
+  "dateformat": "^3.0.3",
+  "dotenv": "^8.2.0",
+  "fs-extra": "^7.0.1",
+  "helmet": "^3.21.2",
+  "lodash": "^4.17.15",
+  "npm": "^6.8.0",
+  "path": "^0.12.7",
+  "promise": "^8.0.2",
+  "uuid": "^3.3.2"
+}
 ```
 
 ## :rocket: Simple Usage
