@@ -219,23 +219,28 @@ demoFunc()
   const jsonDB = (new (require('./lib/json_db.js'))()).run()
   // Set table
   jsonDB.table(table_name, settings = {})
+  jsonDB.from(table_name, settings = {}) // Alias for table()
   // Create table
   jsonDB.create(table_name = '', fields = {}, settings = {})
   // Delete table
   jsonDB.remove(table_name, settings = {})
+
+  // SQL-like !!! Coming soon !!!
+  jsonDB.sql(sql_string, values = [], settings = {})
 ```
 ## Available methods for table and items
 ```js
   const jsonDB = (new (require('./lib/json_db.js'))()).run()
   const table = jsonDB.table(table_name, settings = {}) // Set table
+  //inte
 
   table.isset(field) // Check if the given field
   table.name() // Returns table name
   table.getData() // Get rows from table
   table.setData() // Setting array data to table.data
   
-  table.objectInsert({...}) // Create item from object
-  table.bulkInsert([{...}, {...}]) // Create items from array or object
+  table.objectInsert(obj) // Create item from object
+  table.bulkInsert(data) // Create items from array or object
   table.getRowKey(id) // Returns array key of row with specified ID
   table.clearKeyInfo() // Set NULL for currentId and currentKey and item id
   table.setFields() // 
@@ -244,6 +249,17 @@ demoFunc()
   table.getById(id) // alias find(id)
   table.delete() // delete curent item
   table.clear() // clear cache curent item
+
+  // SELECT
+  // operators ['=', '==', '===', '<>', '!=', '!==', '>', '<', '>=', '<=', 'and', 'or']
+  table.where(field, operator, value) 
+  table.andWhere(field, operator, value) // Alias for where(), setting AND for searching
+  table.orWhere(field, operator, value) // Alias for where(), setting OR for searching
+  table.orderBy(field, sort) // ASC or DESC
+  table.orderBySql('title DESC, id ASC') // ORDER BY an SQL-like
+  table.limit(number, offset = 0) // set limit and offset
+  table.offset(offset) // set offset
+  table.findAll() // Execute
 
   // setter or getter field for item
   table[field_name] // get
