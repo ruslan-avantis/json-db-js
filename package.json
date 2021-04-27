@@ -4,11 +4,12 @@
   "description": "JSON DATA BASE FOR JS",
   "main": "index.js",
   "scripts": {
-    "start": "start"
+    "index": "node index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "test"
+    "url": "git+https://github.com/ruslan-avantis/json-db-js.git"
   },
   "keywords": [
     "JSON DATA BASE FOR JS"
