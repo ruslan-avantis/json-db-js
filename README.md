@@ -194,9 +194,9 @@ const demoFunc = async () => {
     // Database Run
     const jsonDB = await db.run()
     // Database сonnecting table demo_table
-    const demo_table = await jsonDB.table('demo_table', await db.getConfig())
+    const table = await jsonDB.table('demo_table', await db.getConfig())
 
-    let data = await demo_table
+    let data = await table
         .where('id', '>=', 1)
         .where('id', '<=', 10)
         .where('title', '!=', 'Demo')
@@ -214,9 +214,33 @@ demoFunc()
 
 ```
 
-## Support for SQL syntax in development now
+## Available static methods
 ```js
+  const db = new (require('./lib/json_db.js'))()
+  const jsonDB = await db.run()
+  // Set table
+	jsonDB.table(table_name, settings = {})
+  // Create table
+  jsonDB.create(table_name = '', fields = {}, settings = {})
+  // Delete table
+  jsonDB.remove(table_name, settings = {})
+```
+## Available methods
+```js
+  const db = new (require('./lib/json_db.js'))()
+  const jsonDB = await db.run()
+	const table = await jsonDB.table(table_name, settings = {}) // Set table
 
+	table.isset(field) // Check if the given field
+  table.name() // Returns table name
+  table.getData() // Get rows from table
+  table.setData() // Setting array data to table.data
+  
+  table.objectInsert({...}) // Create item from object
+  table.bulkInsert([{...}, {...}]) // Create items from array or object
+  table.getRowKey(id) // Returns array key of row with specified ID
+  
+  
 ```
 
 ## Support for SQL syntax in development now
