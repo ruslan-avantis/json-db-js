@@ -214,24 +214,22 @@ demoFunc()
 
 ```
 
-## Available static methods
+## Available static methods for table
 ```js
-  const db = new (require('./lib/json_db.js'))()
-  const jsonDB = await db.run()
+  const jsonDB = (new (require('./lib/json_db.js'))()).run()
   // Set table
-	jsonDB.table(table_name, settings = {})
+  jsonDB.table(table_name, settings = {})
   // Create table
   jsonDB.create(table_name = '', fields = {}, settings = {})
   // Delete table
   jsonDB.remove(table_name, settings = {})
 ```
-## Available methods
+## Available methods for table and items
 ```js
-  const db = new (require('./lib/json_db.js'))()
-  const jsonDB = await db.run()
-	const table = await jsonDB.table(table_name, settings = {}) // Set table
+  const jsonDB = (new (require('./lib/json_db.js'))()).run()
+  const table = jsonDB.table(table_name, settings = {}) // Set table
 
-	table.isset(field) // Check if the given field
+  table.isset(field) // Check if the given field
   table.name() // Returns table name
   table.getData() // Get rows from table
   table.setData() // Setting array data to table.data
@@ -239,6 +237,8 @@ demoFunc()
   table.objectInsert({...}) // Create item from object
   table.bulkInsert([{...}, {...}]) // Create items from array or object
   table.getRowKey(id) // Returns array key of row with specified ID
+  table.clearKeyInfo() // Set NULL for currentId and currentKey and item id
+  table.setFields() // 
   
   
 ```
