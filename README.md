@@ -67,6 +67,7 @@ const demoFunc = async () => {
     const demo_table = await jsonDB.table('demo_table', await db.getConfig())
 
     // New item
+    // demo_table.id - last_id + 1
     demo_table.alias = await Plugin.token()
     demo_table.title = 'Test 13'
     demo_table.description = 'description 13'
@@ -215,6 +216,11 @@ demoFunc()
 
 ## Support for SQL syntax in development now
 ```js
+
+```
+
+## Support for SQL syntax in development now
+```js
 const jsonDbRun = require('./lib/json_db.js')
 
 const demoFunc = async () => {
@@ -226,6 +232,11 @@ const demoFunc = async () => {
     // Database сonnecting table demo_table
     
     let sql_string = `SELECT * FROM products WHERE category_id IN (SELECT id FROM categories) ORDER BY id`
+    /** Other examples
+        `SELECT name FROM leaderboard ORDER BY score DESC LIMIT 5 OFFSET 3`
+        `SELECT a.name AS name FROM (SELECT *, (price*quantity) AS new FROM Products ORDER BY new DESC, name ASC LIMIT 1 OFFSET 0) AS a`
+        `SELECT * FROM prods WHERE name LIKE '%keyword%' OR sku LIKE '%keyword%'`
+     */
     
     let table = await jsonDB.sql(sql_string, await db.getConfig())
     
