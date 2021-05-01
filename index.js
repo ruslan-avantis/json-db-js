@@ -67,7 +67,7 @@ let demoJsonDabaBase = async () => {
 	console.log('lastId:', id)
 
 	// Creating random items up to the specified id
-	while (id < 5000) {
+	while (id < 8000) {
 		
 		// Clear cache item
 		await table.clear()
@@ -99,12 +99,13 @@ let demoJsonDabaBase = async () => {
 	/** Get previous item by id or object params */
 
 	let obj = await table.find({'id': 2000})
-	console.log('-- find item by object params --', 'currentId: ', table.currentId, 'item: ', obj)
+	console.log('-- find item by object params --', 'currentId: ', table.currentId, ', item: ', obj)
 
 	let obj2 = await table.find(1000)
-	console.log('-- find item by id --', 'currentId: ', table.currentId, 'item: ', obj2)
+	console.log('-- find item by id --', 'currentId: ', table.currentId, ', item: ', obj2)
 
-	/** SELECT */ 
+	/** `SELECT * FROM ${table_name} WHERE description LIKE '%world%' ORDER BY title ASC, id DESC LIMIT 5 OFFSET 0`
+	*/ 
 	let res = await table
 		//.where('id', '>=', 1)
 		//.where('id', '<=', 10000)
@@ -119,7 +120,7 @@ let demoJsonDabaBase = async () => {
 		//.offset(0)
 		.findAll()
 
-	console.log(`SELECT * FROM ${table_name} WHERE description LIKE '%world%'`, 'count()', table.count(), 'data',  res.data)
+	console.log('count: ', table.count(), ', data: ',  res.data)
 
 	/** Bulk Add Data
 
