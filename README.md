@@ -118,26 +118,10 @@ demoFunc()
 ## Bulk Add Data
 ```js
 
-const Plugin = require('./lib/plugin.js')
-//const words_it = require('./test/words_it.json')
-//const words_ru = require('./test/words_ru.json')
-const words_en = require('./test/words_en.json')
+async function demoFunc(table_name) {
 
-const db = new (require('./lib/db_run.js'))()
-
-async function demoFunc() {
-
-    const settings = {
-            'console_error': true,
-            'consoleLog': (...arg) => { console.log(...arg) }
-    },
-    table_name = 'demo_table'
-
-    // Database Run
-    const jsonDB = await db.run(settings)
-
-    // Database сonnecting table demo_table
-    const demo_table = await jsonDB.table(table_name, await db.getConfig())
+    // Database сonnecting table table_name
+    const table = await jsonDB.table(table_name, await db.getConfig())
 
     let bulk_arr = [], i = 0
 
@@ -166,22 +150,24 @@ async function demoFunc() {
         bulk_arr.push(item_obj)
     }
 
-    let ids = await demo_table.bulkInsert(bulk_arr)
+    let ids = await table.bulkInsert(bulk_arr)
 
 }
 
-demoFunc()
+demoFunc('demo_table')
 
 ```
 
 ## SELECT Data
 ```js
-const jsonDbRun = require('./lib/db_run.js')
 
 const demoFunc = async () => {
 
+    // Set table name
+    const table_name = 'demo_table'
+
     // Database сonnecting table demo_table
-    const table = await jsonDB.table('demo_table', await db.getConfig())
+    const table = await jsonDB.table(table_name, await db.getConfig())
 
     /** Analog SELECT
      * `SELECT * FROM ${table_name} WHERE description LIKE '%world%' ORDER BY title ASC, id DESC LIMIT 5 OFFSET 0`
@@ -209,7 +195,9 @@ demoFunc()
 
 ## Available static methods for table
 ```js
+
   const jsonDB = (new (require('./lib/db_run.js'))()).run()
+
   // Set table
   jsonDB.table(table_name, settings = {})
   jsonDB.from(table_name, settings = {}) // Alias for table()
@@ -221,6 +209,7 @@ demoFunc()
   // SQL-like !!! Coming soon !!!
   jsonDB.sql(sql_string, values = [], settings = {})
 ```
+
 ## Available methods for table and items
 ```js
   const jsonDB = (new (require('./lib/json_db.js'))()).run()
@@ -265,6 +254,7 @@ demoFunc()
 
 ## Coming Soon: Support for SQL syntax
 ```js
+
 const jsonDbRun = require('./lib/db_run.js')
 
 const demoFunc = async () => {
@@ -285,9 +275,7 @@ const demoFunc = async () => {
 
     let values = [] // [] or false or array values
 
-    let table = await jsonDB.sql(sql_string, values, await db.getConfig())
-    
-    let data = await table.findAll()
+    let data = await jsonDB.sql(sql_string, values, await db.getConfig())
 
     console.log('data', data)
 }
