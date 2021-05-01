@@ -55,6 +55,8 @@ const demoFunc = async () => {
         'field_boolean': 'boolean',
         'field_integer': 'integer',
         'field_double': 'double',
+        'field_obj': 'object',
+        'field_array': 'array',
         'sort': 'integer',
         'state': 'integer',
         'score': 'integer',
@@ -94,6 +96,8 @@ const demoFunc = async () => {
         table.field_boolean = Plugin.randomBoolean()
         table.field_double = Plugin.randomFloat(0, 100)
         table.field_integer = Plugin.randomInteger(1000, 9999)
+        table.field_obj = {'a': 1, 'b': 2}
+        table.field_array = [1,2,3,4,5]
         table.sort = Plugin.randomInteger(1, 10000)
         table.state = Plugin.randomInteger(0, 2)
         table.score = Plugin.randomInteger(111111, 1000000)
@@ -152,6 +156,9 @@ async function demoFunc(table_name) {
         item_obj.field_boolean = Plugin.randomBoolean()
         item_obj.field_double = Plugin.randomFloat(0, 100)
         item_obj.field_integer = Plugin.randomInteger(1000, 9999)
+        item_obj.field_obj = {'a': 1, 'b': 2, 'c': 3, 'd': 4}
+        item_obj.field_array = [1,2,3,4,5,6,7,8,9,10]
+
         item_obj.sort = Plugin.randomInteger(1, 10000)
         item_obj.state = Plugin.randomInteger(0, 2)
         item_obj.score = Plugin.randomInteger(111111, 1000000)

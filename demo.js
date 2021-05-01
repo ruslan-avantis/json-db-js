@@ -46,6 +46,8 @@ let demoJsonDabaBase = async () => {
 		'field_boolean': 'boolean',
 		'field_integer': 'integer',
 		'field_double': 'double',
+		'field_obj': 'object',
+        'field_array': 'array',
 		'sort': 'integer',
 		'state': 'integer',
 		'score': 'integer',
@@ -85,6 +87,8 @@ let demoJsonDabaBase = async () => {
 		table.field_boolean = Plugin.randomBoolean()
 		table.field_double = Plugin.randomFloat(0, 100)
 		table.field_integer = Plugin.randomInteger(1000, 9999)
+		table.field_obj = {'a': 1, 'b': 2}
+        table.field_array = [1,2,3,4,5]
 		table.sort = Plugin.randomInteger(1, 10000)
 		table.state = Plugin.randomInteger(0, 2)
 		table.score = Plugin.randomInteger(111111, 1000000)
