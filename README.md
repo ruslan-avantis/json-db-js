@@ -57,7 +57,9 @@ const demoFunc = async () => {
         'field_double': 'double',
         'sort': 'integer',
         'state': 'integer',
-        'score': 'integer'
+        'score': 'integer',
+		'date_create': 'string',
+		'date_update': 'string'
     },
     settings_full = await db.getConfig()
 
@@ -95,6 +97,8 @@ const demoFunc = async () => {
         table.sort = Plugin.randomInteger(1, 10000)
         table.state = Plugin.randomInteger(0, 2)
         table.score = Plugin.randomInteger(111111, 1000000)
+        table.date_create = Plugin.dateFormat(Date.now(), "dd-mm-yyyy HH:MM:ss")
+		table.date_update = table.date_create
 
         // Create new item
         await table.save()
@@ -151,6 +155,8 @@ async function demoFunc(table_name) {
         item_obj.sort = Plugin.randomInteger(1, 10000)
         item_obj.state = Plugin.randomInteger(0, 2)
         item_obj.score = Plugin.randomInteger(111111, 1000000)
+        item_obj.date_create = Plugin.dateFormat(Date.now(), "dd-mm-yyyy HH:MM:ss")
+		item_obj.date_update = item_obj.date_create
 
         bulk_arr.push(item_obj)
     }
