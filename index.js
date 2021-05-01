@@ -107,9 +107,9 @@ let demoJsonDabaBase = async () => {
 	/** `SELECT * FROM ${table_name} WHERE description LIKE '%world%' ORDER BY title ASC, id DESC LIMIT 5 OFFSET 0`
 	*/ 
 	let res = await table
+		.where('description', 'LIKE', 'world')
 		//.where('id', '>=', 1)
 		//.where('id', '<=', 10000)
-		.where('description', 'LIKE', 'worlds')
 		//.where('id', 'IN', '10')
 		//.where('field_boolean', 'NOT IN', true)
 		//.where('title', '>', 'AB')
@@ -120,7 +120,7 @@ let demoJsonDabaBase = async () => {
 		//.offset(0)
 		.findAll()
 
-	console.log('count: ', table.count(), ', data: ',  res.data)
+	console.log('count: ', table.count(), 'Total count: ', table.totalCount(), ', data: ',  res.data)
 
 	/** Bulk Add Data
 
