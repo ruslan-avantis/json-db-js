@@ -1,5 +1,7 @@
-/** Если запуск без PM2
-	Добавляем переменные из файла .env в process.env
+'use strict'
+
+/** If starting without PM2
+	Add variables from the .env file to process.env
 **/
 if (!process.env.PM2_RUN) {
 	const dotenv = require('dotenv').config()
@@ -10,13 +12,13 @@ if (process.env.NODE_ENV) {
 
 let demoJsonDabaBase = async () => {
 
-	//const jsonDbRun = require('./lib/json_db.js')
 	const Plugin = require('./lib/plugin.js')
-
+	//const words_ru = require('./test/words_ru.json')
+	const words_en = require('./test/words_en.json')
 	// Database configuration
-	let db = new (require('./lib/json_db.js'))().setAutoCreate(true)
+	let db = new (require('./lib/db_run.js'))()//.setAutoCreate(true)
 
-	const settings = {
+	const settings_ = {
 		'auto_create': true,
 		'JSON_DB_CRYPT': false,
 		'JSON_DB_API': false,
@@ -31,11 +33,12 @@ let demoJsonDabaBase = async () => {
 		'HTTP_CODES': 'https://raw.githubusercontent.com/ruslan-avantis/APIS/master/http-codes.json'
 	}
 
-	// Database Run
-	const jsonDB = await db.run(settings)
-
-	// Create Table
-	await jsonDB.create('demo_table_2', {
+	const settings = {
+		'console_error': true,
+		'consoleLog': (...arg) => { console.log(...arg) }
+	  },
+	  table_name = 'demo_table',
+	  table_config = {
 		'alias': 'string',
 		'title': 'string',
 		'description': 'string',
@@ -46,71 +49,80 @@ let demoJsonDabaBase = async () => {
 		'sort': 'integer',
 		'state': 'integer',
 		'score': 'integer'
-	}, await db.getConfig())
+	  },
+	  settings_full = await db.getConfig()
 
-	// Database сonnecting table demo_table
-	const demo_table = await jsonDB.table('demo_table_2', await db.getConfig())
+	// Database Run
+	const jsonDB = await db.run(settings)
 
-	// New item
-	demo_table.alias = await Plugin.token()
-	demo_table.title = 'Test 13'
-	demo_table.description = 'description 13'
-	demo_table.field_string = 'title_ru Test 13'
-	demo_table.field_boolean = true
-	demo_table.field_integer = 500
-	demo_table.field_double = 10.20
-	demo_table.sort = 1
-	demo_table.state = 1
-	demo_table.score = 12
+	/** Database сonnecting table demo_table */
+	let table = await jsonDB.table(table_name, await settings_full)
+	if (table === false) {
+		await jsonDB.create(table_name, table_config, settings_full)
+		table = await jsonDB.table(table_name, await settings_full)
+	}
 
-	// Create New Item
-	await demo_table.save()
+	let id = table.lastId()
 
-	// Get ID Item
-	let id = demo_table.id
-	console.log('demo_table.id: ', id)
+	console.log('lastId:', id)
 
-	// Edit Curent Item
-	demo_table.state = 5
-	demo_table.score = '103'
-	// Update Curent Item
-	await demo_table.save()
+	// Creating random items up to the specified id
+	while (id < 5000) {
+		
+		// Clear cache item
+		await table.clear()
 
-	// Clear Cache Item
-	await demo_table.clear()
-	console.log('-- Clear Cache Item --', demo_table)
+    	// New item
+		table.alias = Plugin.token()
+		let title = Plugin.randomWord(words_en, 3)
+		table.title = title[0].toUpperCase() +title.slice(1)
+		let description = Plugin.randomWord(words_en, 10)
+		table.description = description[0].toUpperCase() + description.slice(1)
+		let field_string = Plugin.randomWord(words_en, 4)
+		table.field_string = field_string[0].toUpperCase() + field_string.slice(1)
+		table.field_boolean = Plugin.randomBoolean()
+		table.field_double = Plugin.randomFloat(0, 100)
+		table.field_integer = Plugin.randomInteger(1000, 9999)
+		table.sort = Plugin.randomInteger(1, 10000)
+		table.state = Plugin.randomInteger(0, 2)
+		table.score = Plugin.randomInteger(111111, 1000000)
 
-	// New Item
-	demo_table.alias = await Plugin.token()
-	demo_table.title = 'title'
-	demo_table.description = 'description'
-	demo_table.field_string = 'string'
-	demo_table.field_boolean = true
-	demo_table.field_integer = 300
-	demo_table.field_double = 15.70
-	demo_table.sort = 2
-	demo_table.state = 3
-	demo_table.score = 10
-	// Create New Item
-	await demo_table.save()
+    	// Create new item
+    	await table.save()
 
-	console.log('-- Get id new item --', demo_table.id)
+		id = await table.currentId
 
-	// Get previous item by id
-	await demo_table.find(id)
-	// Edit Item
-	demo_table.alias = await Plugin.token()
-	demo_table.state = 0
-	demo_table.score = 55
-	demo_table.title = 'Edit title'
-	demo_table.description = 'Edit description'
-	demo_table.field_string = 'Edit string'
-	// Update Item
-	await demo_table.save()
+		console.log('Create new item id:', id)
 
-	console.log('-- Update item data --', demo_table)
+	}
+	
+	/** Get previous item by id or object params */
+
+	let obj = await table.find({'id': 2000})
+	console.log('-- find item by object params --', 'currentId: ', table.currentId, 'item: ', obj)
+
+	let obj2 = await table.find(1000)
+	console.log('-- find item by id --', 'currentId: ', table.currentId, 'item: ', obj2)
+
+	/** SELECT */ 
+	let res = await table
+		//.where('id', '>=', 1)
+		//.where('id', '<=', 10000)
+		.where('description', 'LIKE', 'worlds')
+		//.where('id', 'IN', '10')
+		//.where('field_boolean', 'NOT IN', true)
+		//.where('title', '>', 'AB')
+		//.orderBySql('title DESC, id ASC')
+		.orderBy('title', 'ASC')
+		.orderBy('id', 'DESC')
+		.limit(5, 0) // .limit(number, offset)
+		//.offset(0)
+		.findAll()
+
+	console.log(`SELECT * FROM ${table_name} WHERE description LIKE '%world%'`, 'count()', table.count(), 'data',  res.data)
 
 	/** Bulk Add Data
+
 	let bulk_arr = [
 		{
 			"alias": Plugin.token(),
@@ -138,20 +150,6 @@ let demoJsonDabaBase = async () => {
 	]
 
 	demo_table.bulkInsert(bulk_arr)
-	*/
-
-	/** SELECT Data
-	let data = await demo_table.where('id', '>=', 1)
-		.where('id', '<=', 10)
-		.where('title', '>', 'AB')
-		//.orderBySql('title DESC, id ASC')
-		.orderBy('title', 'ASC')
-		.orderBy('id', 'DESC')
-		.limit(10) // .limit(number, offset)
-		.offset(0)
-		.findAll()
-
-	console.log('demo_table.where', data)
 	*/
 
 }

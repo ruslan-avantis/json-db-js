@@ -3,7 +3,9 @@
 const Benchmark = require('benchmark')
 const suite = new Benchmark.Suite
 const Plugin = require('../lib/plugin.js')
-const db = new (require('../lib/json_db.js'))()
+const db = new (require('../lib/db_run.js'))()
+const words_ru = require('./words_ru.json')
+const words_en = require('./words_en.json')
 
 let benchmarkRun = async () => {
 
@@ -57,72 +59,84 @@ let benchmarkRun = async () => {
 
   suite
   .add('table.create', async () => {
-
-    await jsonDB.create(table_name, table_config, settings_full)
-
+    //await jsonDB.create(table_name, table_config, settings_full)
   })
+  /** */
   .add('item.create', async () => {
 
     let table = await jsonDB.table(table_name, settings_full)
 
+	await table.clear()
+
     // New item
-	  table.alias = await Plugin.token()
-	  table.title = 'Test 13'
-	  table.description = 'description 13'
-	  table.field_string = 'title_ru Test 13'
-	  table.field_boolean = true
-	  table.field_integer = 500
-	  table.field_double = 10.20
-	  table.sort = 1
-	  table.state = 1
-    table.score = 12
+	table.alias = Plugin.token()
+	table.title = Plugin.randomWord(words_ru, 3)
+	table.title = table.title[0].toUpperCase() + table.title.slice(1)
+	table.description = Plugin.randomWord(words_en, 10)
+	table.description = table.description[0].toUpperCase() + table.description.slice(1)
+	table.field_string = Plugin.randomWord(words_en, 4)
+	table.field_string = table.field_string[0].toUpperCase() + table.field_string.slice(1)
+	table.field_boolean = Plugin.randomBoolean()
+	table.field_double = Plugin.randomFloat(0, 100)
+	table.field_integer = Plugin.randomInteger(1000, 9999)
+	table.sort = Plugin.randomInteger(1, 10000)
+	table.state = Plugin.randomInteger(0, 2)
+	table.score = Plugin.randomInteger(111111, 1000000)
 
     // Create New Item
     await table.save()
 
-    id = table.id
-
   })
-  .add('table.bulkInsert', async () => {
+  
+  //.add('table.bulkInsert', async () => {
     
+    //let table = await jsonDB.table(table_name, settings_full)
+
+    //await table.bulkInsert(bulk_arr)
+
+  //})
+  //.add('table.find', async () => {
+    /**
     let table = await jsonDB.table(table_name, settings_full)
-
-    await table.bulkInsert(bulk_arr)
-
-  })
-  .add('table.find', async () => {
     
-    let table = await jsonDB.table(table_name, settings_full)
-    
-	  // Get previous item by id
-	  await demo_table.find(id)
-	  // Edit Item
-	  demo_table.alias = await Plugin.token()
-	  demo_table.state = 0
-	  demo_table.score = 55
-	  demo_table.title = 'Edit title'
-	  demo_table.description = 'Edit description'
-	  demo_table.field_string = 'Edit string'
-	  // Update Item
-	  await demo_table.save()
+	// Get previous item by id
+	await table.find(id)
+	// Edit Item
+	table.alias = await Plugin.token()
+	table.title = await Plugin.randomWord(words_ru, 3)
+	table.title = await table.title[0].toUpperCase() + table.title.slice(1)
+	table.description = await Plugin.randomWord(words_en, 10)
+	table.description = await table.description[0].toUpperCase() + table.description.slice(1)
+	table.field_string = await Plugin.randomWord(words_en, 4)
+	table.field_string = await table.field_string[0].toUpperCase() + table.field_string.slice(1)
+	table.field_boolean = true
+	table.field_integer = await Plugin.randomInteger(1000, 9999)
+	table.sort = await Plugin.randomInteger(1, 9999)
+	table.state = await Plugin.randomInteger(0, 1)
+	table.score = await Plugin.randomInteger(1, 9999)
+	// Update Item
+	await table.save()
+	*/
 
-  })
-  .add('table.select', async () => {
-
+  //})
+  //.add('table.select', async () => {
+  	/**
     let table = await jsonDB.table(table_name, settings_full)
 
     data = await table
-      .where('id', '>=', 1)
-		  .where('id', '<=', 10)
-		  .where('title', '>', 'a')
-		  //.orderBySql('title DESC, id ASC')
-		  .orderBy('title', 'ASC')
-		  .orderBy('id', 'DESC')
-		  .limit(10) // .limit(number, offset)
-		  .offset(0)
-		  .findAll()
+		//.where('id', '>=', 1)
+		//.where('id', '<=', 10)
+		.where('description', 'LIKE', 'world')
+		//.where('title', '>', 'a')
+		//.orderBySql('title DESC, id ASC')
+		.orderBy('title', 'ASC')
+		.orderBy('id', 'DESC')
+		.limit(2) // .limit(number, offset)
+		.offset(0)
+		.findAll()
+	*/
 
-  })
+  //})
   .on('cycle', event => {
     i++
     console.log(` i: ${i} n/ ${event.target}`)

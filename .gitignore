@@ -1,4 +1,5 @@
 node_modules/
 _json_db_/
+test/mocha.test.js
 package-lock.json
-test/main.test.js
+test.js

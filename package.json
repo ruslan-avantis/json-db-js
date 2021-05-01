@@ -4,8 +4,8 @@
   "description": "JSON DATA BASE FOR JS",
   "main": "index.js",
   "scripts": {
-    "index": "node index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "mocha": "node node_modules/mocha/bin/mocha test/mocha.test.js --recursive"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,7 @@
   "author": "avantis",
   "license": "MIT",
   "dependencies": {
+    "assert": "^2.0.0",
     "benchmark": "^2.1.4",
     "chai": "^4.3.4",
     "curlrequest": "^1.0.1",
@@ -25,6 +26,7 @@
     "dotenv": "^8.2.0",
     "fs-extra": "^7.0.1",
     "helmet": "^3.21.2",
+    "js-sql-parser": "^1.4.1",
     "lodash": "^4.17.15",
     "mocha": "^8.3.2",
     "npm": "^6.8.0",
