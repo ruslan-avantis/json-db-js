@@ -219,7 +219,6 @@ demoFunc()
   // Set table
   const table = jsonDB.table(table_name, settings = {})
 
-  table.isset(field) // Check if the given field
   table.name() // Returns table name
   table.getData() // Get rows from table
   table.setData() // Setting array data to table.data
@@ -228,24 +227,33 @@ demoFunc()
   table.bulkInsert(data) // Create items from array or object
   table.getRowKey(id) // Returns array key of row with specified ID
   table.clearKeyInfo() // Set NULL for currentId and currentKey and item id
-  table.setFields() // 
+  table.setFields()
 
-  table.getById(id) // alias find(id)
-  table.delete() // delete curent item
-  table.clear() // clear cache curent item
-  table.lastId() // last_id in curent table
+  // last_id in curent table
+  table.lastId()
+  // Check if the given field exists
+  table.isset(field)
+  // table schema
+  table.schema()
 
   // Get item data
   let obj = await table.find(id) // Get item by id
   let obj = await table.find({'id': 1}) // Get item by object data
 
-  // setter or getter field for item
+  table.currentId
+  table.currentKey
+
+  /** setter or getter field for item */
   table[field_name] // get
   table[field_name] = 1 // set
   delete table[field_name] // delete
 
   // Save-update item data
   table.save()
+  // delete curent item
+  table.delete()
+  // clear cache curent item
+  table.clear()
 
   // SELECT
   // operators ['=', '==', '===', '<>', '!=', '!==', '>', '<', '>=', '<=', 'and', 'or']
@@ -258,6 +266,15 @@ demoFunc()
   table.offset(offset) // set offset
   
   let data = await table.findAll() // Execute
+  // or
+  await table.findAll() // Execute
+  let data = await table.data
+
+  table.count()
+  table.totalCount()
+
+  // Get all data table
+  let all_table_data = await table.getData()
 
 ```
 
