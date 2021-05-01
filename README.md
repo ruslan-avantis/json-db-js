@@ -28,7 +28,7 @@ npm i json-db-js --save
 ## :rocket: Simple Usage
 
 ```js
-const jsonDbRun = require('./lib/json_db.js')
+const jsonDbRun = require('./lib/db_run.js')
 const Plugin = require('./lib/plugin.js')
 
 const demoFunc = async () => {
@@ -143,7 +143,7 @@ demoFunc()
 
 ## Bulk Add Data
 ```js
-const jsonDbRun = require('./lib/json_db.js')
+const jsonDbRun = require('./lib/db_run.js')
 const Plugin = require('./lib/plugin.js')
 
 async function demoFunc() {
@@ -193,7 +193,7 @@ demoFunc()
 
 ## SELECT Data
 ```js
-const jsonDbRun = require('./lib/json_db.js')
+const jsonDbRun = require('./lib/db_run.js')
 
 const demoFunc = async () => {
 
@@ -224,7 +224,7 @@ demoFunc()
 
 ## Available static methods for table
 ```js
-  const jsonDB = (new (require('./lib/json_db.js'))()).run()
+  const jsonDB = (new (require('./lib/db_run.js'))()).run()
   // Set table
   jsonDB.table(table_name, settings = {})
   jsonDB.from(table_name, settings = {}) // Alias for table()
@@ -280,7 +280,7 @@ demoFunc()
 
 ## Coming Soon: Support for SQL syntax
 ```js
-const jsonDbRun = require('./lib/json_db.js')
+const jsonDbRun = require('./lib/db_run.js')
 
 const demoFunc = async () => {
 
