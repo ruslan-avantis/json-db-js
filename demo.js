@@ -37,7 +37,7 @@ let demoJsonDabaBase = async () => {
 		'console_error': true,
 		'consoleLog': (...arg) => { console.log(...arg) }
 	  },
-	  table_name = 'demo_table',
+	  table_name = 'demo_table_2',
 	  table_config = {
 		'alias': 'string',
 		'title': 'string',
@@ -48,7 +48,9 @@ let demoJsonDabaBase = async () => {
 		'field_double': 'double',
 		'sort': 'integer',
 		'state': 'integer',
-		'score': 'integer'
+		'score': 'integer',
+		'date_create': 'string',
+		'date_update': 'string'
 	  },
 	  settings_full = await db.getConfig()
 
@@ -67,7 +69,7 @@ let demoJsonDabaBase = async () => {
 	console.log('lastId:', id)
 
 	// Creating random items up to the specified id
-	while (id < 8000) {
+	while (id < 500) {
 		
 		// Clear cache item
 		await table.clear()
@@ -86,6 +88,8 @@ let demoJsonDabaBase = async () => {
 		table.sort = Plugin.randomInteger(1, 10000)
 		table.state = Plugin.randomInteger(0, 2)
 		table.score = Plugin.randomInteger(111111, 1000000)
+		table.date_create = Plugin.dateFormat(Date.now(), "dd-mm-yyyy HH:MM:ss")
+		table.date_update = table.date_create
 
     	// Create new item
     	await table.save()
