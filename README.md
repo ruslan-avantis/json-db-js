@@ -37,78 +37,78 @@ const demoFunc = async () => {
 
     //db.setAutoCreate(true)
 
-	const settings = {
-		    'console_error': true,
-		    'consoleLog': (...arg) => { console.log(...arg) }
-	},
-	table_name = 'demo_table',
-	table_config = {
-		'alias': 'string',
-		'title': 'string',
-		'description': 'string',
-		'field_string': 'string',
-		'field_boolean': 'boolean',
-		'field_integer': 'integer',
-		'field_double': 'double',
-		'sort': 'integer',
-		'state': 'integer',
-		'score': 'integer'
-	},
-	settings_full = await db.getConfig()
+    const settings = {
+            'console_error': true,
+            'consoleLog': (...arg) => { console.log(...arg) }
+    },
+    table_name = 'demo_table',
+    table_config = {
+        'alias': 'string',
+        'title': 'string',
+        'description': 'string',
+        'field_string': 'string',
+        'field_boolean': 'boolean',
+        'field_integer': 'integer',
+        'field_double': 'double',
+        'sort': 'integer',
+        'state': 'integer',
+        'score': 'integer'
+    },
+    settings_full = await db.getConfig()
 
-	// Database Run
-	const jsonDB = await db.run(settings)
+    // Database Run
+    const jsonDB = await db.run(settings)
 
-	/** Database сonnecting table demo_table */
-	let table = await jsonDB.table(table_name, await settings_full)
-	if (table === false) {
-		await jsonDB.create(table_name, table_config, settings_full)
-		table = await jsonDB.table(table_name, await settings_full)
-	}
+    /** Database сonnecting table demo_table */
+    let table = await jsonDB.table(table_name, await settings_full)
+    if (table === false) {
+        await jsonDB.create(table_name, table_config, settings_full)
+        table = await jsonDB.table(table_name, await settings_full)
+    }
 
-	let id = table.lastId()
+    let id = table.lastId()
 
-	console.log('lastId:', id)
+    console.log('lastId:', id)
 
-	// Creating random items up to the specified id
-	while (id < 8000) {
-		
-		// Clear cache item
-		await table.clear()
+    // Creating random items up to the specified id
+    while (id < 8000) {
+        
+        // Clear cache item
+        await table.clear()
 
-    	// New item
-		table.alias = Plugin.token()
-		let title = Plugin.randomWord(words_en, 3)
-		table.title = title[0].toUpperCase() +title.slice(1)
-		let description = Plugin.randomWord(words_en, 10)
-		table.description = description[0].toUpperCase() + description.slice(1)
-		let field_string = Plugin.randomWord(words_en, 4)
-		table.field_string = field_string[0].toUpperCase() + field_string.slice(1)
-		table.field_boolean = Plugin.randomBoolean()
-		table.field_double = Plugin.randomFloat(0, 100)
-		table.field_integer = Plugin.randomInteger(1000, 9999)
-		table.sort = Plugin.randomInteger(1, 10000)
-		table.state = Plugin.randomInteger(0, 2)
-		table.score = Plugin.randomInteger(111111, 1000000)
+        // New item
+        table.alias = Plugin.token()
+        let title = Plugin.randomWord(words_en, 3)
+        table.title = title[0].toUpperCase() +title.slice(1)
+        let description = Plugin.randomWord(words_en, 10)
+        table.description = description[0].toUpperCase() + description.slice(1)
+        let field_string = Plugin.randomWord(words_en, 4)
+        table.field_string = field_string[0].toUpperCase() + field_string.slice(1)
+        table.field_boolean = Plugin.randomBoolean()
+        table.field_double = Plugin.randomFloat(0, 100)
+        table.field_integer = Plugin.randomInteger(1000, 9999)
+        table.sort = Plugin.randomInteger(1, 10000)
+        table.state = Plugin.randomInteger(0, 2)
+        table.score = Plugin.randomInteger(111111, 1000000)
 
-    	// Create new item
-    	await table.save()
+        // Create new item
+        await table.save()
 
-		id = await table.currentId
+        id = await table.currentId
 
-		console.log('Create new item id:', id)
+        console.log('Create new item id:', id)
 
-	}
-	
-	/** Get item object by object params */
-	let obj = await table.find({'id': 2000})
-	console.log('-- find item by object params --', 'currentId: ', table.currentId, ', item: ', obj)
+    }
+    
+    /** Get item object by object params */
+    let obj = await table.find({'id': 2000})
+    console.log('-- find item by object params --', 'currentId: ', table.currentId, ', item: ', obj)
 
-	/** Get item object by id */
-	let obj2 = await table.find(1000)
-	console.log('-- find item by id --', 'currentId: ', table.currentId, ', item: ', obj2)
+    /** Get item object by id */
+    let obj2 = await table.find(1000)
+    console.log('-- find item by id --', 'currentId: ', table.currentId, ', item: ', obj2)
 
-	
+    
 }
 
 demoFunc()
@@ -128,10 +128,10 @@ const db = new (require('./lib/db_run.js'))()
 async function demoFunc() {
 
     const settings = {
-		    'console_error': true,
-		    'consoleLog': (...arg) => { console.log(...arg) }
-	},
-	table_name = 'demo_table'
+            'console_error': true,
+            'consoleLog': (...arg) => { console.log(...arg) }
+    },
+    table_name = 'demo_table'
 
     // Database Run
     const jsonDB = await db.run(settings)
@@ -147,21 +147,21 @@ async function demoFunc() {
 
         item_obj.alias = Plugin.token()
 
-	    let title = Plugin.randomWord(words_en, 3)
-	    item_obj.title = title[0].toUpperCase() +title.slice(1)
+        let title = Plugin.randomWord(words_en, 3)
+        item_obj.title = title[0].toUpperCase() +title.slice(1)
 
-	    let description = Plugin.randomWord(words_en, 10)
-	    item_obj.description = description[0].toUpperCase() + description.slice(1)
+        let description = Plugin.randomWord(words_en, 10)
+        item_obj.description = description[0].toUpperCase() + description.slice(1)
 
-	    let field_string = Plugin.randomWord(words_en, 4)
-	    item_obj.field_string = field_string[0].toUpperCase() + field_string.slice(1)
+        let field_string = Plugin.randomWord(words_en, 4)
+        item_obj.field_string = field_string[0].toUpperCase() + field_string.slice(1)
 
-	    item_obj.field_boolean = Plugin.randomBoolean()
-	    item_obj.field_double = Plugin.randomFloat(0, 100)
-	    item_obj.field_integer = Plugin.randomInteger(1000, 9999)
-	    item_obj.sort = Plugin.randomInteger(1, 10000)
-	    item_obj.state = Plugin.randomInteger(0, 2)
-	    item_obj.score = Plugin.randomInteger(111111, 1000000)
+        item_obj.field_boolean = Plugin.randomBoolean()
+        item_obj.field_double = Plugin.randomFloat(0, 100)
+        item_obj.field_integer = Plugin.randomInteger(1000, 9999)
+        item_obj.sort = Plugin.randomInteger(1, 10000)
+        item_obj.state = Plugin.randomInteger(0, 2)
+        item_obj.score = Plugin.randomInteger(111111, 1000000)
 
         bulk_arr.push(item_obj)
     }
@@ -185,22 +185,22 @@ const demoFunc = async () => {
 
     /** Analog SELECT
      * `SELECT * FROM ${table_name} WHERE description LIKE '%world%' ORDER BY title ASC, id DESC LIMIT 5 OFFSET 0`
-	*/ 
-	let res = await table
-		.where('description', 'LIKE', 'world')
-		//.where('id', '>=', 1)
-		//.where('id', '<=', 10000)
-		//.where('id', 'IN', '10')
-		//.where('field_boolean', 'NOT IN', true)
-		//.where('title', '>', 'AB')
-		//.orderBySql('title DESC, id ASC')
-		.orderBy('title', 'ASC')
-		.orderBy('id', 'DESC')
-		.limit(5, 0) // .limit(number, offset)
-		//.offset(0)
-		.findAll()
+    */ 
+    let res = await table
+        .where('description', 'LIKE', 'world')
+        //.where('id', '>=', 1)
+        //.where('id', '<=', 10000)
+        //.where('id', 'IN', '10')
+        //.where('field_boolean', 'NOT IN', true)
+        //.where('title', '>', 'AB')
+        //.orderBySql('title DESC, id ASC')
+        .orderBy('title', 'ASC')
+        .orderBy('id', 'DESC')
+        .limit(5, 0) // .limit(number, offset)
+        //.offset(0)
+        .findAll()
 
-	console.log('count: ', table.count(), 'Total count: ', table.totalCount(), ', data: ',  res.data)
+    console.log('count: ', table.count(), 'Total count: ', table.totalCount(), ', data: ',  res.data)
 }
 
 demoFunc()
