@@ -212,9 +212,12 @@ demoFunc()
 
 ## Available methods for table and items
 ```js
-  const jsonDB = (new (require('./lib/json_db.js'))()).run()
-  const table = jsonDB.table(table_name, settings = {}) // Set table
-  //inte
+  const jsonDB = (new (require('./lib/db_run.js'))()).run()
+
+  // Set table name
+  const table_name = 'demo_table'
+  // Set table
+  const table = jsonDB.table(table_name, settings = {})
 
   table.isset(field) // Check if the given field
   table.name() // Returns table name
@@ -227,16 +230,22 @@ demoFunc()
   table.clearKeyInfo() // Set NULL for currentId and currentKey and item id
   table.setFields() // 
 
-  let obj = await table.find(id) // Get item by id
   table.getById(id) // alias find(id)
   table.delete() // delete curent item
   table.clear() // clear cache curent item
   table.lastId() // last_id in curent table
 
+  // Get item data
+  let obj = await table.find(id) // Get item by id
+  let obj = await table.find({'id': 1}) // Get item by object data
+
   // setter or getter field for item
   table[field_name] // get
   table[field_name] = 1 // set
   delete table[field_name] // delete
+
+  // Save-update item data
+  table.save()
 
   // SELECT
   // operators ['=', '==', '===', '<>', '!=', '!==', '>', '<', '>=', '<=', 'and', 'or']
