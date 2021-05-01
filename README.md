@@ -23,7 +23,9 @@ JSON open source database. Written in Javascript. Distributed under the [MIT](ht
 
 ## :rocket: Simple Usage
 
-[demo.js](https://github.com/ruslan-avantis/json-db-js/blob/main/demo.js)
+```bash
+node [demo.js](https://github.com/ruslan-avantis/json-db-js/blob/main/demo.js)
+```
 
 ```js
 const Plugin = require('./lib/plugin.js')
