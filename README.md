@@ -4,31 +4,32 @@ JSON open source database. Written in Javascript. Distributed under the [MIT](ht
 ## The following libraries need to be installed
 ```json
 {
-    "benchmark": "^2.1.4",
-    "chai": "^4.3.4",
-    "curlrequest": "^1.0.1",
-    "dateformat": "^3.0.3",
-    "debug": "^4.3.1",
-    "dotenv": "^8.2.0",
-    "fs-extra": "^7.0.1",
-    "helmet": "^3.21.2",
-    "lodash": "^4.17.15",
-    "mocha": "^8.3.2",
-    "npm": "^6.8.0",
-    "path": "^0.12.7",
-    "promise": "^8.0.2",
-    "uuid": "^3.3.2"
+  "assert": "^2.0.0",
+  "benchmark": "^2.1.4",
+  "chai": "^4.3.4",
+  "curlrequest": "^1.0.1",
+  "dateformat": "^3.0.3",
+  "debug": "^4.3.1",
+  "dotenv": "^8.2.0",
+  "fs-extra": "^7.0.1",
+  "helmet": "^3.21.2",
+  "lodash": "^4.17.15",
+  "mocha": "^8.3.2",
+  "npm": "^6.8.0",
+  "path": "^0.12.7",
+  "promise": "^8.0.2",
+  "uuid": "^3.3.2"
 }
 ```
 
-## :rocket: Simple Usage
+## Quick test
 
-Run file [demo.js](https://github.com/ruslan-avantis/json-db-js/blob/main/demo.js)
-
+For a quick test run the file [demo.js](https://github.com/ruslan-avantis/json-db-js/blob/main/demo.js)
 ```bash
 node demo.js
 ```
 
+## :rocket: Simple Usage
 ```js
 const Plugin = require('./lib/plugin.js')
 //const words_it = require('./test/words_it.json')
