@@ -79,7 +79,7 @@ let demoJsonDabaBase = async () => {
 	// Database Run
 	const jsonDB = await db.run(settings)
 
-	/** Database сonnecting table demo_table */
+	// Database сonnecting table demo_table
 	let table = await jsonDB.table(table_name, settings_full)
 	if (table === false) {
 		await jsonDB.create(table_name, table_config, settings_full)
@@ -98,7 +98,7 @@ let demoJsonDabaBase = async () => {
 
 	console.log('data_sql:', data_sql)
 
-	/** Bulk Insert Data */
+	// Bulk Insert Data
 	let id = table.lastId()
 	let count = 10, i = 0, data = []
 
@@ -119,15 +119,14 @@ let demoJsonDabaBase = async () => {
 
 	console.log('End create items. IDS:', ids)
 	
-	/** Get previous item by id or object params */
+	// Get previous item by id or object params
 	let obj1 = await table.find({'id': 2000})
 	console.log('-- find item by object params --', 'currentId: ', table.currentId, ', item: ', obj1)
 
 	let obj2 = await table.find(1000)
 	console.log('-- find item by id --', 'currentId: ', table.currentId, ', item: ', obj2)
 	
-	/** `SELECT * FROM ${table_name} WHERE description LIKE '%world%' ORDER BY title ASC, id DESC LIMIT 5 OFFSET 0`
-	*/
+	// `SELECT * FROM ${table_name} WHERE description LIKE '%world%' ORDER BY title ASC, id DESC LIMIT 5 OFFSET 0`
 	let res = await table
 		.where('description', 'LIKE', 'world')
 		//.where('id', '>=', 1)

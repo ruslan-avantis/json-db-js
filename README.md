@@ -170,7 +170,7 @@ async function demoFunc(table_name) {
         bulk_i++
     }
 
-    let ids = await table.bulkInsert(bulk_arr)
+    let ids = await table.insert(bulk_arr)
 
 }
 
