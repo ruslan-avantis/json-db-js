@@ -3,6 +3,4 @@ _json_db_/*
 !_json_db_/benchmark_table.config.json
 !_json_db_/benchmark_table.data.json
 test/mocha.test.js
-demo/random_seo.js
-demo/sql.js
-test1.js
+test_main/
