@@ -46,7 +46,7 @@ const demoFunc = async () => {
             'console_error': true,
             'consoleLog': (...arg) => { console.log(...arg) }
     },
-    table_name = 'demo_table',
+    table_name = 'benchmark_table',
     table_config = {
         'alias': 'string',
         'title': 'string',
@@ -68,7 +68,7 @@ const demoFunc = async () => {
     // Database Run
     const jsonDB = await db.run(settings)
 
-    /** Database сonnecting table demo_table */
+    /** Database сonnecting table benchmark_table */
     let table = await jsonDB.table(table_name, await settings_full)
     if (table === false) {
         await jsonDB.create(table_name, table_config, settings_full)
@@ -97,7 +97,7 @@ const demoFunc = async () => {
         table.field_double = Plugin.randomFloat(0, 100)
         table.field_integer = Plugin.randomInteger(1000, 9999)
         table.field_obj = {'a': 1, 'b': 2}
-        table.field_array = [1,2,3,4,5]
+        table.field_array = Plugin.randomArray(10)
         table.sort = Plugin.randomInteger(1, 10000)
         table.state = Plugin.randomInteger(0, 2)
         table.score = Plugin.randomInteger(111111, 1000000)
@@ -136,9 +136,9 @@ async function demoFunc(table_name) {
     // Database сonnecting table table_name
     const table = await jsonDB.table(table_name, await db.getConfig())
 
-    let bulk_arr = [], i = 0
+    let bulk_arr = [], bulk_i = 0
 
-    while (i < 3) {
+    while (bulk_i < 3) {
 
         let item_obj = {}
 
@@ -157,7 +157,7 @@ async function demoFunc(table_name) {
         item_obj.field_double = Plugin.randomFloat(0, 100)
         item_obj.field_integer = Plugin.randomInteger(1000, 9999)
         item_obj.field_obj = {'a': 1, 'b': 2, 'c': 3, 'd': 4}
-        item_obj.field_array = [1,2,3,4,5,6,7,8,9,10]
+        item_obj.field_array = Plugin.randomArray(15)
 
         item_obj.sort = Plugin.randomInteger(1, 10000)
         item_obj.state = Plugin.randomInteger(0, 2)
@@ -166,13 +166,15 @@ async function demoFunc(table_name) {
         item_obj.date_update = item_obj.date_create
 
         bulk_arr.push(item_obj)
+
+        bulk_i++
     }
 
     let ids = await table.bulkInsert(bulk_arr)
 
 }
 
-demoFunc('demo_table')
+demoFunc('benchmark_table')
 
 ```
 
@@ -182,9 +184,9 @@ demoFunc('demo_table')
 const demoFunc = async () => {
 
     // Set table name
-    const table_name = 'demo_table'
+    const table_name = 'benchmark_table'
 
-    // Database сonnecting table demo_table
+    // Database сonnecting table benchmark_table
     const table = await jsonDB.table(table_name, await db.getConfig())
 
     /** Analog SELECT
@@ -233,16 +235,14 @@ demoFunc()
   const jsonDB = (new (require('./lib/db_run.js'))()).run()
 
   // Set table name
-  const table_name = 'demo_table'
+  const table_name = 'benchmark_table'
   // Set table
   const table = jsonDB.table(table_name, settings = {})
 
   table.name() // Returns table name
   table.getData() // Get rows from table
   table.setData() // Setting array data to table.data
-  
-  table.objectInsert(obj) // Create item from object
-  table.bulkInsert(data) // Create items from array or object
+
   table.getRowKey(id) // Returns array key of row with specified ID
   table.clearKeyInfo() // Set NULL for currentId and currentKey and item id
   table.setFields()
@@ -261,6 +261,9 @@ demoFunc()
   table.currentId
   table.currentKey
 
+  // Clear cache curent item
+  table.clear()
+
   /** setter or getter field for item */
   table[field_name] // get
   table[field_name] = 1 // set
@@ -268,20 +271,31 @@ demoFunc()
 
   // Save-update item data
   table.save()
-  // delete curent item
+  // Delete curent item
   table.delete()
-  // clear cache curent item
-  table.clear()
+
+  // Bulk Insert Data. Create items from array or object
+  table.insert(data)
 
   // SELECT
-  // operators ['=', '==', '===', '<>', '!=', '!==', '>', '<', '>=', '<=', 'and', 'or']
+  // where operators ['=', '==', '===', '<>', '!=', '!==', '>', '<', '>=', '<=', 'LIKE', 'IN', 'NOT IN']
   table.where(field, operator, value) 
   table.andWhere(field, operator, value) // Alias for where(), setting AND for searching
   table.orWhere(field, operator, value) // Alias for where(), setting OR for searching
-  table.orderBy(field, sort) // ASC or DESC
-  table.orderBySql('title DESC, id ASC') // ORDER BY an SQL-like
+  table.orderBy(field, sort = 'ASC') // ASC or DESC, default sort = ASC 
+  table.orderBySql('title DESC, id ASC') // ORDER BY an SQL like
   table.limit(number, offset = 0) // set limit and offset
   table.offset(offset) // set offset
+
+  table.columns('*') // default all columns
+  // or string SQL like
+  table.columns('id AS _id, title, field_boolean AS boolean')
+  // or array
+  table.columns([
+    {'column': 'id', 'as': '_id'},
+    {'column': 'title'},
+    {'column': 'field_boolean', 'as': 'boolean'}
+  ])
   
   let data = await table.findAll() // Execute
   // or
@@ -296,7 +310,8 @@ demoFunc()
 
 ```
 
-## Coming Soon: Support for SQL syntax
+## Support for SQL syntax
+Currently only select is supported
 ```js
 
 const jsonDbRun = require('./lib/db_run.js')
@@ -307,21 +322,30 @@ const demoFunc = async () => {
     const db = new jsonDbRun()
     // Database Run
     const jsonDB = await db.run()
-    // Database сonnecting table demo_table
-    
-    let sql_string = `SELECT * FROM products WHERE category_id IN (SELECT id FROM categories) ORDER BY id`
-    /** Other examples
-        `SELECT name FROM leaderboard ORDER BY score DESC LIMIT 5 OFFSET 3`
-        `SELECT * FROM prods WHERE name LIKE '%keyword%' OR sku LIKE '%keyword%'`
-        `SELECT a.name AS name 
-         FROM (SELECT *, (price*quantity) AS new FROM Products ORDER BY new DESC, name ASC LIMIT 1 OFFSET 0) AS a`
-     */
+    // Database сonnecting table benchmark_table
 
-    let values = [] // [] or false or array values
+    const table_name = 'benchmark_table'
+    // Currently only select is supported
+    let sql_string = `
+        SELECT *
+        FROM ${table_name}
+        WHERE description LIKE '%world%'
+        ORDER BY id DESC
+        LIMIT 5 OFFSET 0
+    `
+    // or
+    let sql_string = `
+        SELECT id, title AS name, description AS desc_
+        FROM ${table_name}
+        WHERE id >= 100 AND id <= 1000 AND description LIKE '%world%'
+        ORDER BY title, id DESC
+        LIMIT 10 OFFSET 0
+    `
 
-    let data = await jsonDB.sql(sql_string, values, await db.getConfig())
+    let data_sql = await jsonDB.query(sql_string, [], db.getConfig())
 
-    console.log('data', data)
+    console.log('data_sql:', data_sql)
+
 }
 
 demoFunc()

@@ -1,5 +1,7 @@
 node_modules/
 _json_db_/
+!_json_db_/benchmark_table.config.json
+!_json_db_/benchmark_table.data.json
 test/mocha.test.js
-package-lock.json
-test.js
+demo/random_seo.js
+demo/sql.js
