@@ -5,3 +5,4 @@ _json_db_/
 test/mocha.test.js
 demo/random_seo.js
 demo/sql.js
+test.js
