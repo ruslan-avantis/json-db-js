@@ -1,4 +1,4 @@
-# «jsonDbJs» - JSON Data Base for Node.js
+# JSON Data Base for Javascript (Node.js)
 JSON open source database. Written in Javascript. Distributed under the [MIT](https://opensource.org/licenses/MIT) license.
 
 ## The following libraries need to be installed
@@ -28,7 +28,37 @@ For a quick test run the file [demo.js](https://github.com/ruslan-avantis/json-d
 ```bash
 node demo.js
 ```
-
+## Useful functions: Random Item Generate with the before and after prefix
+```js
+/** Random item generate. You can change this function to suit your needs.
+ * @param string $before
+ * @param string $after
+ * @param array $words_1
+ * @param array $words_2
+ * @return object item
+ */
+const randomItem = async (before = '', after = '', words_1 = [], words_2 = []) => {
+    let item = {}
+    item[`${before}+alias+${after}`] = await Plugin.token()
+    let title = await Plugin.randomWord(words_1, 3)
+    item[`${before}+title+${after}`] = await title[0].toUpperCase() +title.slice(1)
+    let description = await Plugin.randomWord(words_1, 10)
+    item[`${before}+description+${after}`] = await description[0].toUpperCase() + description.slice(1)
+    let field_string = await Plugin.randomWord(words_1, 4)
+    item[`${before}+field_string+${after}`] = await field_string[0].toUpperCase() + field_string.slice(1)
+    item[`${before}+field_boolean+${after}`] = await Plugin.randomBoolean()
+    item[`${before}+field_double+${after}`] = await Plugin.randomFloat(1, 100, 2)
+    item[`${before}+field_integer+${after}`] = await Plugin.randomInteger(1000, 9999)
+    item[`${before}+field_array+${after}`] = await Plugin.randomArray([], 10, 'integer')
+    item[`${before}+field_object+${after}`] = await Plugin.randomObject(words_1, words_2, 20)
+    item[`${before}+sort+${after}`] = await Plugin.randomInteger(1, 10000)
+    item[`${before}+state+${after}`] = await Plugin.randomInteger(0, 2)
+    item[`${before}+score+${after}`] = await Plugin.randomInteger(111111, 1000000)
+    item[`${before}+date_create+${after}`] = await Plugin.dateFormat(Date.now(), "dd-mm-yyyy HH:MM:ss")
+    item[`${before}+date_update+${after}`] = await item[`${before}+date_create+${after}`]
+    return item
+}
+```
 ## :rocket: Simple Usage
 ```js
 const Plugin = require('./lib/plugin.js')
@@ -38,35 +68,37 @@ const words_en = require('./test/words_en.json')
 
 let db = new (require('./lib/db_run.js'))()
 
+const settings = {
+    'console_error': true,
+    'consoleLog': (...arg) => { console.log(...arg) }
+},
+prefix_before = '_', // Field: '_alias'
+prefix_after = '_1', // Field: 'alias_1'
+// Table name with prefixes. Return '_demo_table_1'
+table_name = Plugin.tableName('demo_table', prefix_before, prefix_after),
+// Table config with prefixes. Return '_alias_1', '_title_1'
+table_config = Plugin.tableConfig({
+    'alias': 'string',
+    'title': 'string',
+    'description': 'string',
+    'field_string': 'string',
+    'field_boolean': 'boolean',
+    'field_integer': 'integer',
+    'field_double': 'double',
+    'field_obj': 'object', // Fields of type array or object support search LIKE %text%
+    'field_array': 'array', // Fields of type array or object support search LIKE %text%
+    'sort': 'integer',
+    'state': 'integer',
+    'score': 'integer',
+    'date_create': 'string',
+    'date_update': 'string'
+}, prefix_before, prefix_after),
+settings_full = await db.getConfig()
+
+// Database Run
+const jsonDB = await db.run(settings)
+
 const demoFunc = async () => {
-
-    //db.setAutoCreate(true)
-
-    const settings = {
-            'console_error': true,
-            'consoleLog': (...arg) => { console.log(...arg) }
-    },
-    table_name = 'benchmark_table',
-    table_config = {
-        'alias': 'string',
-        'title': 'string',
-        'description': 'string',
-        'field_string': 'string',
-        'field_boolean': 'boolean',
-        'field_integer': 'integer',
-        'field_double': 'double',
-        'field_obj': 'object',
-        'field_array': 'array',
-        'sort': 'integer',
-        'state': 'integer',
-        'score': 'integer',
-        'date_create': 'string',
-        'date_update': 'string'
-    },
-    settings_full = await db.getConfig()
-
-    // Database Run
-    const jsonDB = await db.run(settings)
 
     /** Database сonnecting table benchmark_table */
     let table = await jsonDB.table(table_name, await settings_full)
@@ -84,44 +116,29 @@ const demoFunc = async () => {
         
         // Clear cache item
         await table.clear()
-
-        // New item
-        table.alias = Plugin.token()
-        let title = Plugin.randomWord(words_en, 3)
-        table.title = title[0].toUpperCase() +title.slice(1)
-        let description = Plugin.randomWord(words_en, 10)
-        table.description = description[0].toUpperCase() + description.slice(1)
-        let field_string = Plugin.randomWord(words_en, 4)
-        table.field_string = field_string[0].toUpperCase() + field_string.slice(1)
-        table.field_boolean = Plugin.randomBoolean()
-        table.field_double = Plugin.randomFloat(0, 100)
-        table.field_integer = Plugin.randomInteger(1000, 9999)
-        table.field_obj = {'a': 1, 'b': 2}
-        table.field_array = Plugin.randomArray(10)
-        table.sort = Plugin.randomInteger(1, 10000)
-        table.state = Plugin.randomInteger(0, 2)
-        table.score = Plugin.randomInteger(111111, 1000000)
-        table.date_create = Plugin.dateFormat(Date.now(), "dd-mm-yyyy HH:MM:ss")
-        table.date_update = table.date_create
-
+        // Generate new item
+        let item = randomItem(prefix_before, prefix_after, words_en, words_en)
+        // Set fields item
+        for (let field in item) {
+            table[field] = item[field]
+        }
         // Create new item
         await table.save()
-
+        // Get id new item
         id = await table.currentId
 
         console.log('Create new item id:', id)
 
     }
     
-    /** Get item object by object params */
+    // Get item object by object params
     let obj = await table.find({'id': 2000})
     console.log('-- find item by object params --', 'currentId: ', table.currentId, ', item: ', obj)
 
-    /** Get item object by id */
+    // Get item object by id
     let obj2 = await table.find(1000)
     console.log('-- find item by id --', 'currentId: ', table.currentId, ', item: ', obj2)
 
-    
 }
 
 demoFunc()
@@ -131,7 +148,7 @@ demoFunc()
 ## Bulk Add Data
 ```js
 
-async function demoFunc(table_name) {
+const bulkAddData = async () => {
 
     // Database сonnecting table table_name
     const table = await jsonDB.table(table_name, await db.getConfig())
@@ -139,34 +156,8 @@ async function demoFunc(table_name) {
     let bulk_arr = [], bulk_i = 0
 
     while (bulk_i < 3) {
-
-        let item_obj = {}
-
-        item_obj.alias = Plugin.token()
-
-        let title = Plugin.randomWord(words_en, 3)
-        item_obj.title = title[0].toUpperCase() +title.slice(1)
-
-        let description = Plugin.randomWord(words_en, 10)
-        item_obj.description = description[0].toUpperCase() + description.slice(1)
-
-        let field_string = Plugin.randomWord(words_en, 4)
-        item_obj.field_string = field_string[0].toUpperCase() + field_string.slice(1)
-
-        item_obj.field_boolean = Plugin.randomBoolean()
-        item_obj.field_double = Plugin.randomFloat(0, 100)
-        item_obj.field_integer = Plugin.randomInteger(1000, 9999)
-        item_obj.field_obj = {'a': 1, 'b': 2, 'c': 3, 'd': 4}
-        item_obj.field_array = Plugin.randomArray(15)
-
-        item_obj.sort = Plugin.randomInteger(1, 10000)
-        item_obj.state = Plugin.randomInteger(0, 2)
-        item_obj.score = Plugin.randomInteger(111111, 1000000)
-        item_obj.date_create = Plugin.dateFormat(Date.now(), "dd-mm-yyyy HH:MM:ss")
-        item_obj.date_update = item_obj.date_create
-
-        bulk_arr.push(item_obj)
-
+        let item = randomItem(prefix_before, prefix_after, words_en, words_en)
+        bulk_arr.push(item)
         bulk_i++
     }
 
@@ -174,17 +165,14 @@ async function demoFunc(table_name) {
 
 }
 
-demoFunc('benchmark_table')
+bulkAddData()
 
 ```
 
 ## SELECT Data
 ```js
 
-const demoFunc = async () => {
-
-    // Set table name
-    const table_name = 'benchmark_table'
+const selectData = async () => {
 
     // Database сonnecting table benchmark_table
     const table = await jsonDB.table(table_name, await db.getConfig())
@@ -209,7 +197,7 @@ const demoFunc = async () => {
     console.log('count: ', table.count(), 'Total count: ', table.totalCount(), ', data: ',  res.data)
 }
 
-demoFunc()
+selectData()
 
 ```
 
@@ -316,13 +304,7 @@ Currently only select is supported
 
 const jsonDbRun = require('./lib/db_run.js')
 
-const demoFunc = async () => {
-
-    // Database configuration
-    const db = new jsonDbRun()
-    // Database Run
-    const jsonDB = await db.run()
-    // Database сonnecting table benchmark_table
+const sqlFunction = async () => {
 
     const table_name = 'benchmark_table'
     // Currently only select is supported
@@ -348,7 +330,7 @@ const demoFunc = async () => {
 
 }
 
-demoFunc()
+sqlFunction()
 
 ```
 

@@ -2,5 +2,7 @@ node_modules/
 _json_db_/*
 !_json_db_/benchmark_table.config.json
 !_json_db_/benchmark_table.data.json
+!_json_db_/_demo_table.config.json
+!_json_db_/_demo_table.data.json
 test/mocha.test.js
-test_main/
+dev/
