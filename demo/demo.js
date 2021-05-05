@@ -372,17 +372,17 @@ const run = async () => {
 	await table.selectSqlLike(3, 5)
 
 	// Let's create a second table for join queries
-	//const table_2 = await CustomClass.connect(custom_settings, table_alias, structure_tables, '_', '_2')
+	const table_2 = await CustomClass.connect(custom_settings, table_alias, structure_tables, '_', '_2')
 	// Add 10 items to the table
-	//await table_2.bulkInsertData(10)
+	await table_2.bulkInsertData(10)
 	// Let's create a third table for join queries
-	//const table_3 = await CustomClass.connect(custom_settings, table_alias, structure_tables, '_', '_3')
+	const table_3 = await CustomClass.connect(custom_settings, table_alias, structure_tables, '_', '_3')
 	// Add 10 items to the table
-	//await table_3.bulkInsertData(10)
+	await table_3.bulkInsertData(10)
 
 	// SQL Like SELECT JOIN
 	// Coming soon !!! I am finalizing.
-	//await table.selectLeftJoinSqlLike_1(table_2.table_name, table_3.table_name)
+	await table.selectLeftJoinSqlLike_1(table_2.table_name, table_3.table_name)
 }
 
 run()
