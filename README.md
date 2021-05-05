@@ -39,23 +39,23 @@ node demo.js
  */
 const randomItem = async (before = '', after = '', words_1 = [], words_2 = []) => {
     let item = {}
-    item[`${before}+alias+${after}`] = await Plugin.token()
-    let title = await Plugin.randomWord(words_1, 3)
-    item[`${before}+title+${after}`] = await title[0].toUpperCase() +title.slice(1)
-    let description = await Plugin.randomWord(words_1, 10)
-    item[`${before}+description+${after}`] = await description[0].toUpperCase() + description.slice(1)
-    let field_string = await Plugin.randomWord(words_1, 4)
-    item[`${before}+field_string+${after}`] = await field_string[0].toUpperCase() + field_string.slice(1)
-    item[`${before}+field_boolean+${after}`] = await Plugin.randomBoolean()
-    item[`${before}+field_double+${after}`] = await Plugin.randomFloat(1, 100, 2)
-    item[`${before}+field_integer+${after}`] = await Plugin.randomInteger(1000, 9999)
-    item[`${before}+field_array+${after}`] = await Plugin.randomArray([], 10, 'integer')
-    item[`${before}+field_object+${after}`] = await Plugin.randomObject(words_1, words_2, 20)
-    item[`${before}+sort+${after}`] = await Plugin.randomInteger(1, 10000)
-    item[`${before}+state+${after}`] = await Plugin.randomInteger(0, 2)
-    item[`${before}+score+${after}`] = await Plugin.randomInteger(111111, 1000000)
-    item[`${before}+date_create+${after}`] = await Plugin.dateFormat(Date.now(), "dd-mm-yyyy HH:MM:ss")
-    item[`${before}+date_update+${after}`] = await item[`${before}+date_create+${after}`]
+    item[`${before}alias${after}`] = Plugin.token()
+    let title = Plugin.randomWord(words_1, 3)
+    item[`${before}title${after}`] = title[0].toUpperCase() +title.slice(1)
+    let description = Plugin.randomWord(words_1, 10)
+    item[`${before}description${after}`] = description[0].toUpperCase() + description.slice(1)
+    let field_string = Plugin.randomWord(words_1, 4)
+    item[`${before}field_string${after}`] = field_string[0].toUpperCase() + field_string.slice(1)
+    item[`${before}field_boolean${after}`] = Plugin.randomBoolean()
+    item[`${before}field_double${after}`] = Plugin.randomFloat(1, 100, 2)
+    item[`${before}field_integer${after}`] = Plugin.randomInteger(1000, 9999)
+    item[`${before}field_array${after}`] = Plugin.randomArray([], 10, 'integer')
+    item[`${before}field_object${after}`] = Plugin.randomObject(words_1, words_2, 20)
+    item[`${before}sort${after}`] = Plugin.randomInteger(1, 10000)
+    item[`${before}state${after}`] = Plugin.randomInteger(0, 2)
+    item[`${before}score${after}`] = Plugin.randomInteger(111111, 1000000)
+    item[`${before}date_create${after}`] = Plugin.dateFormat(Date.now(), "dd-mm-yyyy HH:MM:ss")
+    item[`${before}date_update${after}`] = item[`${before}date_create${after}`]
     return item
 }
 ```
